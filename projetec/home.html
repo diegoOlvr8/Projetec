@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- FontAwesome para os ícones -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+   
+    <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
+        <h1>HOME</h1>
+        <a href="profile.html">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+</svg>
+        </a>
+    </div>
+
+   
+
+<div id="cardsArea" class="container mt-1 pt-4">
+  <div id="cardsRow" class="row justify-content-center"></div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const perfil = JSON.parse(localStorage.getItem('perfil'));
+    if (!perfil){ window.location.href = 'profile.html'; return; }
+
+    const cardsRow = document.getElementById('cardsRow');
+    cardsRow.innerHTML = '';
+
+    const defaultImgs = {
+      cozinha: 'maxresdefault.jpg',
+      quarto : 'quarto_grande_com_sacada_dc22_original.jpeg',
+      banheiro:'box-de-banheiro-_1742577922783.jpg'
+    };
+
+    perfil.rooms.forEach(room=>{
+      const col = document.createElement('div');
+      col.className = "col-12 col-md-4 mb-4 d-flex justify-content-center";
+      col.innerHTML = `
+        <a href="room.html?key=${encodeURIComponent(room.key)}">
+          <img src="${defaultImgs[room.type] || 'placeholder.jpg'}"
+               alt="${room.label}"
+               class="img-fluid rounded" style="max-width:90%;">
+          <h5 class="text-center mt-2">${room.label}</h5>
+        </a>`;
+      cardsRow.appendChild(col);
+    });
+  });
+</script>
+
+
+    <div class="d-flex justify-content-around fixed-bottom bg-light p-2">
+        </button>
+        
+        <a href="criar_tarefa.html" class="btn btn-primary">
+            <i class="fas fa-plus"></i> </a>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .bg-primary {
+            background-color: dodgerblue !important;
+        }
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</body>
+</html>
