@@ -13,10 +13,11 @@
 
     $sql="INSERT INTO ambiente_compartilhado(Codigo_de_acesso) VALUES ('$Codigo_de_acesso')";
 
-    SELECT C
+
     
 
 
     ?>
 </body>
+
 </html>
