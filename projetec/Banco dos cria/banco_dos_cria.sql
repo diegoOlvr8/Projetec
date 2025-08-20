@@ -24,16 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `ambiente_compartilhado`
---
-
-CREATE TABLE `ambiente_compartilhado` (
-  `Codigo_de_acesso` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `comodos`
 --
 
@@ -50,7 +40,9 @@ CREATE TABLE `comodos` (
 
 CREATE TABLE `ranking` (
   `Pontuacao_ranking` int(11) NOT NULL,
-  `Premiacao` varchar(100) NOT NULL
+  `Premiacao` varchar(100) NOT NULL,
+  `Email` text NOT NULL,
+  `Usuario` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
