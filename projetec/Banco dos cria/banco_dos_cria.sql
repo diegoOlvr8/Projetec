@@ -41,7 +41,6 @@ CREATE TABLE `comodos` (
 CREATE TABLE `ranking` (
   `Pontuacao_ranking` int(11) NOT NULL,
   `Premiacao` varchar(100) NOT NULL,
-  `Email` text NOT NULL,
   `Usuario` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
