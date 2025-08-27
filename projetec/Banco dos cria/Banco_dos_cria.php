@@ -17,7 +17,9 @@
             "Separar as roupas sujas","Limpar os móveis","Organizar armário","Varrer o chão",
             "Passar pano no chão","Organizar gavetas","Limpar espelho","Recolher o lixo do quarto"
             }
-    sala=
+    $sala={"Lavar a louça","Secar e guardar a louça","Limpar o fogão","Limpar a geladeira",
+           "Jogar o lixo fora","Limpar armários","Varrer o chão","Passar pano no chão",
+           "Limpar a pia","Organizar as compras","Descongelar o freezer","Limpar micro-ondas","Organizar gavetas"}
     banheiro=
     cozinha=
 
@@ -28,6 +30,7 @@
 </body>
 
 </html>
+
 
 
 
