@@ -56,7 +56,7 @@
     const addRoomBtn = document.getElementById('addRoomBtn');
     let roomIdx = 0;
 
-    function addRoomSelector(saved){             // saved = {type:'quarto', label:'Quarto 2'}
+    function addRoomSelector(saved){             
       roomIdx++;
       const wrapper = document.createElement('div');
       wrapper.className = "input-group mb-2";
@@ -87,7 +87,7 @@
         perfilSalvo.rooms.forEach(r => addRoomSelector(r));
       }
     } else {
-      // por padrão cria um quarto, uma cozinha e um banheiro
+      
       ['quarto','cozinha','banheiro'].forEach((t,i)=> addRoomSelector({type:t,label:`${roomTypes[t]} ${i+1}`}));
     }
 
@@ -108,13 +108,13 @@
         });
       }
 
-      // rooms
+      
       const rooms = [];
       document.querySelectorAll('#roomPicker .input-group').forEach((grp,i)=>{
         const type  = grp.querySelector('.room-type').value;
         let  label = grp.querySelector('.room-label').value.trim();
         if (!label) label = `${roomTypes[type]} ${i+1}`;
-        const key   = `${type}-${i+1}`;   // ex: quarto-2
+        const key   = `${type}-${i+1}`;   
         rooms.push({type, key, label});
       });
 
@@ -130,5 +130,6 @@
   </style>
 </body>
 </html>
+
 
 
