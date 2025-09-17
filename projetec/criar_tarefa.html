@@ -137,9 +137,9 @@ jardim: [
     
     perfil.rooms.forEach(r => {
       const opt = document.createElement('option');
-      opt.value = r.key; // ex: "quarto-2"
-      opt.dataset.type = r.type; // ex: "quarto"
-      opt.textContent = r.label; // ex: "Quarto 2"
+      opt.value = r.key; 
+      opt.dataset.type = r.type; 
+      opt.textContent = r.label; 
       roomSelect.appendChild(opt);
     });
 
@@ -188,4 +188,5 @@ jardim: [
   </style>
 </body>
 </html>
+
 
