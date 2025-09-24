@@ -8,16 +8,25 @@
 <body>
     <form action="Login.php" method="post">
     <img src="" alt="">
-    <input type="text" name="a">
+    <input type="text" name="a"><br>
     <input type="password" name="b">
     <input type="submit" value="Enviar">
 </form>
+
 <?php
 $user=$_POST['a'];
-echo "$user";
-
-$senhas=[12345678];
 $senha=$_POST['b'];
+
+$usuarios=["bernardin rei delas","Douglas"];
+$senhas=[12345678,87654321];
+
+$posicao=array_search($user,$usuarios);
+
+if ($usuarios[$posicao]===$senha){
+    echo "login certo";
+}
+else{echo "deu erro";}
+
 
 if (in_array($senha,$senhas)){
     echo "login certo";
