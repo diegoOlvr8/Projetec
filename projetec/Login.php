@@ -6,8 +6,9 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="" method="post"></form>
     <img src="" alt="">
     <input type="text">
-    <input type="text">
+    <input type="password">
 </body>
 </html>
