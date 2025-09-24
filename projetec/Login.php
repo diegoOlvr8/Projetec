@@ -6,9 +6,26 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post"></form>
+    <form action="Login.php" method="post">
     <img src="" alt="">
-    <input type="text">
-    <input type="password">
+    <input type="text" name="a">
+    <input type="password" name="b">
+    <input type="submit" value="Enviar">
+</form>
+
+<?php
+$user=$_POST['a'];
+echo "$user";
+
+$senhas=[12345678];
+$senha=$_POST['b'];
+
+if (in_array($senha,$senhas)){
+    echo "login certo";
+}
+else{echo "deu erro";}
+
+?>
+
 </body>
 </html>
