@@ -10,28 +10,35 @@
     <img src="" alt="">
     <input type="text" name="a"><br>
     <input type="password" name="b">
-    <input type="submit" value="Enviar">
+    <input type="submit" value="Entrar">
+    <input type="submit" value="Criar">
 </form>
 
 <?php
 $user=$_POST['a'];
 $senha=$_POST['b'];
 
-$usuarios=["bernardin rei delas","Douglas"];
-$senhas=[12345678,87654321];
+$usuarios=['Davi','Diego'];
+$senhas=['12345678','senha123'];
 
 $posicao=array_search($user,$usuarios);
 
-if ($usuarios[$posicao]===$senha){
-    echo "login certo";
+array_push($usuarios,$user);
+array_push($senhas,$senha);
+
+if (strlen($senha)<8){
+    echo "Sua senha deve ter no minimo 8 digitos";
 }
-else{echo "deu erro";}
 
 
-if (in_array($senha,$senhas)){
-    echo "login certo";
+if ($senha===$senhas[$posicao]){
+    echo "Login feito com sucesso";
+    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Pagina_inicial.html');
 }
-else{echo "deu erro";}
+else{
+    echo "Senha indisponivel";
+}
+
 
 ?>
 </body>
