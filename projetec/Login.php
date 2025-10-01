@@ -10,8 +10,8 @@
     <img src="" alt="">
     <input type="text" name="a"><br>
     <input type="password" name="b">
-    <input type="submit" value="Entrar">
-    <input type="submit" value="Criar">
+    <input type="submit" name="Entrar" value="Entrar">
+    <input type="submit" name="Criar" value="Criar">
 </form>
 
 <?php
@@ -23,9 +23,12 @@ $senhas=['12345678','senha123'];
 
 $posicao=array_search($user,$usuarios);
 
+function Criar(){
 array_push($usuarios,$user);
 array_push($senhas,$senha);
+}
 
+function Entrar(){  
 if (strlen($senha)<8){
     echo "Sua senha deve ter no minimo 8 digitos";
 }
@@ -37,6 +40,15 @@ if ($senha===$senhas[$posicao]){
 }
 else{
     echo "Senha indisponivel";
+}
+}
+
+if (isset($_POST['Entrar'])){
+    Entrar();
+}
+
+if (isset($_POST['Criar'])){
+    Criar();
 }
 
 
