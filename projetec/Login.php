@@ -7,8 +7,8 @@
 </head>
 <body>
     <form action="Login.php" method="post">
-        <input type="text" name="usuarios"><br>
-        <input type="password" name="senhas">
+        <input type="text" name="usuario"><br>
+        <input type="password" name="senha">
         <input type="submit" name="Entrar" value="Entrar">
         <input type="submit" name="Criar" value="Criar">
     </form> 
@@ -30,6 +30,12 @@ $senhas_registradas=&$_SESSION['senhas'];
 function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     $posicao=array_search($usuario,$usuarios_registrados);
 
+    if (strlen($senha)===0){
+        echo "Preencha o campo de senha";
+    }
+    if ($posicao===false){
+        echo "Usuario não encontrado";
+    }
     if ($senha===$senhas_registradas[$posicao]){
         echo "Login feito com sucesso";
         header('Location:https://diegoolvr8.github.io/Projetec/projetec/Pagina_inicial.html');
@@ -43,6 +49,12 @@ if (isset($_POST['Entrar'])){
 }
 
 function Criar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
+    if (strlen($usuario)===0){
+        echo "Preencha o campo de usuario";
+    }
+    if (strlen($senha)===0){
+        echo "Preencha o campo de senha";
+    }
     array_push($usuarios_registrados,$usuario);
     array_push($senhas_registradas,$senha);
 
