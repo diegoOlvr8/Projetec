@@ -1,17 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .form-container img {
+            display: block;
+            margin: 0 auto 20px;
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button-group input {
+            width: 48%;
+        }
+
+        .form-container p {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+    </style>
 </head>
 <body>
-    <form action="Login.php" method="post">
-        <img src="" alt="">
-        <input type="text" name="a"><br>
-        <input type="password" name="b">
-        <input type="submit" name="Entrar" value="Entrar">
-        <input type="submit" name="Criar" value="Criar">
-    </form>    
+    <div class="form-container">
+        <h1>Bem-vindo</h1>
+        <img src="https://via.placeholder.com/100" alt="Logo">
+        <form action="Login.php" method="post">
+            <input type="text" name="a" placeholder="Usuário" required><br>
+            <input type="password" name="b" placeholder="Senha" required><br>
+            <div class="button-group">
+                <input type="submit" name="Entrar" value="Entrar">
+                <input type="submit" name="Criar" value="Criar">
+            </div>
+        </form>
+        <p>Não tem uma conta? <a href="#">Criar conta</a></p>
+    </div>
 </body>
 </html>
