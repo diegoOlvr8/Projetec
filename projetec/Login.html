@@ -1,17 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, dodgerblue, #0072ff);
+        }
+
+        form {
+            background-color: white;
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 350px;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: dodgerblue;
+            box-shadow: 0 0 8px rgba(30, 144, 255, 0.3);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        input[type="submit"] {
+            width: 48%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .penetrar {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        .penetrar:hover {
+            background-color: #005ecb;
+        }
+
+        .procriar {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .procriar:hover {
+            background-color: #ddd;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
     <form action="Login.php" method="post">
-        <img src="" alt="">
-        <input type="text" name="usuarios"><br>
-        <input type="password" name="senhas">
-        <input type="submit" name="Entrar" value="Entrar">
-        <input type="submit" name="Criar" value="Criar">
+        <h2>Login</h2>
+        <input class="nom" type="text" name="usuarios" placeholder="Usuário">
+        <input class="senh" type="password" name="senhas" placeholder="Senha">
+        <div class="btn-container">
+            <input class="penetrar" type="submit" name="Entrar" value="Entrar">
+            <input class="procriar" type="submit" name="Criar" value="Criar Conta">
+        </div>
     </form>    
 </body>
 </html>
