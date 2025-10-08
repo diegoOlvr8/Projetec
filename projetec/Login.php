@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 $usuario = $_POST['usuario'] ?? '';
@@ -44,7 +43,6 @@ function Criar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
 if (isset($_POST['Criar'])){
     Criar($usuario,$senha,$usuarios_registrados,$senhas_registradas);
 }
-
 ?>
 
 
