@@ -17,14 +17,25 @@
   <div class="container mt-3">
     <form id="tarefaForm">
       <div class="mb-3">
-        <label class="form-label">Cômodo:</label>
+        <label class="form-label">Para qual cômodo será a tarefa?</label>
         <select class="form-select" id="roomSelect">
           <option value="">Selecione…</option>
         </select>
       </div>
 
+      <br>
+      <form method="post">
+        <div class="campo">
+          <label for="nome-tarefa">Nome da Tarefa:</label>
+          <br>
+          <input id="nome-tarefa" type="text" placeholder="Digite o nome da tarefa">
+        </div>
+      </form>
+      <br>
+
+
       <div class="mb-3">
-        <label class="form-label">Tarefa:</label>
+        <label class="form-label">Selecionar tarefa pré-definida (opcional):</label>
         <select class="form-select" id="taskSelect" disabled>
           <option value="">Selecione um cômodo primeiro</option>
         </select>
