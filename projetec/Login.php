@@ -36,7 +36,7 @@ if (isset($_POST['Entrar'])){
 function Criar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     $posicao_senha=array_search($senha,$senhas_registradas);  
     if ($posicao_senha===true){
-        echo "Usuario ja existente"
+        echo "Usuario ja existente";
         return;
     }
 
@@ -49,5 +49,6 @@ if (isset($_POST['Criar'])){
     Criar($usuario,$senha,$usuarios_registrados,$senhas_registradas);
 }
 ?>
+
 
 
