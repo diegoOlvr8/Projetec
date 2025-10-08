@@ -57,11 +57,6 @@
         checkbox.className = 'form-check-input me-2';
         checkbox.addEventListener('change', () => {
           item.classList.toggle('text-decoration-line-through', checkbox.checked);
-          if (checkbox.checked) {
-            adicionarIconeConcluida(item);
-          } else {
-            removerIconeConcluida(item);
-          }
           verificarConcluidas();
         });
 
@@ -118,23 +113,18 @@
 
       historico.forEach(h => {
         const item = document.createElement('li');
-        item.className = 'list-group-item';
-        item.textContent = `${h.nome} - Concluída em: ${h.dataConclusao}`;
+        item.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+        const texto = document.createElement('span');
+        texto.textContent = `${h.nome} - Concluída em: ${h.dataConclusao}`;
+        
+        const checkIcon = document.createElement('i');
+        checkIcon.className = 'fas fa-check-circle text-success ms-2'; 
+
+        item.appendChild(texto);
+        item.appendChild(checkIcon);
         historicoTarefas.appendChild(item);
       });
-    }
-
-    function adicionarIconeConcluida(item) {
-      const checkIcon = document.createElement('i');
-      checkIcon.className = 'fas fa-check-circle text-success ms-2';
-      item.appendChild(checkIcon);
-    }
-
-    function removerIconeConcluida(item) {
-      const checkIcon = item.querySelector('.fas');
-      if (checkIcon) {
-        item.removeChild(checkIcon);
-      }
     }
 
     carregarTarefas();
