@@ -1,18 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="Login.php" method="post">
-        <input type="text" name="usuario"><br>
-        <input type="password" name="senha">
-        <input type="submit" name="Entrar" value="Entrar">
-        <input type="submit" name="Criar" value="Criar">
-    </form> 
-
 <?php
 session_start();
 $usuario=$_POST['usuario'];
@@ -30,9 +15,7 @@ $senhas_registradas=&$_SESSION['senhas'];
 function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     $posicao=array_search($usuario,$usuarios_registrados);
 
-    if (strlen($senha)===0){
-        echo "Preencha o campo de senha";
-    }
+
     if ($posicao===false){
         echo "Usuario não encontrado";
     }
@@ -66,5 +49,4 @@ if (isset($_POST['Criar'])){
 
 ?>
 
-</body>
-</html>
+
