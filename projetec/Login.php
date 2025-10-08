@@ -1,7 +1,8 @@
+
 <?php
 session_start();
-$usuario=$_POST['usuario'];
-$senha=$_POST['senha'];
+$usuario = $_POST['usuario'] ?? '';
+$senha = $_POST['senha'] ?? '';
 
 if (!isset($_SESSION['usuarios'])){
     $_SESSION['usuarios']=[];
@@ -18,6 +19,7 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
 
     if ($posicao===false){
         echo "Usuario não encontrado";
+        return;
     }
     if ($senha===$senhas_registradas[$posicao]){
         echo "Login feito com sucesso";
@@ -25,6 +27,7 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     }
     else{
         echo "Senha Incorreta";
+        return;
     }
 }
 if (isset($_POST['Entrar'])){
@@ -32,15 +35,10 @@ if (isset($_POST['Entrar'])){
 }
 
 function Criar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
-    if (strlen($usuario)===0){
-        echo "Preencha o campo de usuario";
-    }
-    if (strlen($senha)===0){
-        echo "Preencha o campo de senha";
-    }
+
     array_push($usuarios_registrados,$usuario);
     array_push($senhas_registradas,$senha);
-
+    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Login.html');
 }
 
 if (isset($_POST['Criar'])){
