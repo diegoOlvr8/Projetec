@@ -63,7 +63,7 @@
       quarto: "Quarto",
       banheiro: "Banheiro",
       salaestar: "Sala de Estar",
-      areadeservico: "Area de Serviço",
+      areadeservico: "Área de Serviço",
       garagem: "Garagem",
       varanda: "Varanda",
       jardim: "Jardim",
@@ -72,7 +72,6 @@
     const roomPickerDiv = document.getElementById("roomPicker");
     const addRoomBtn = document.getElementById("addRoomBtn");
     let roomIdx = 0;
-
     let dragSrcEl = null;
 
     function addRoomSelector(saved) {
@@ -83,7 +82,7 @@
       wrapper.setAttribute("draggable", "true");
 
       wrapper.innerHTML = `
-        <div class="drag-handle" title="Arraste para reordenar" aria-label="Reordenar cômodo" tabindex="0">≡</div>
+        <div class="drag-handle" title="Arraste para reordenar" aria-label="Reordenar cômodo">≡</div>
         <select class="form-select room-type flex-grow-0" style="width: 150px;">
           ${Object.entries(roomTypes)
             .map(
@@ -102,10 +101,10 @@
 
       wrapper.querySelector(".remove-room").addEventListener("click", () => wrapper.remove());
 
+      // Drag and drop
       wrapper.addEventListener("dragstart", (e) => {
         dragSrcEl = wrapper;
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/html", wrapper.innerHTML);
         wrapper.classList.add("dragging");
       });
 
@@ -118,7 +117,7 @@
         e.dataTransfer.dropEffect = "move";
       });
 
-      wrapper.addEventListener("dragenter", (e) => {
+      wrapper.addEventListener("dragenter", () => {
         if (wrapper !== dragSrcEl) {
           wrapper.style.borderTop = "2px solid dodgerblue";
         }
@@ -132,7 +131,6 @@
         e.preventDefault();
         if (wrapper !== dragSrcEl) {
           wrapper.style.borderTop = "";
-
           roomPickerDiv.insertBefore(dragSrcEl, wrapper);
         }
       });
@@ -155,10 +153,7 @@
     document.getElementById("perfilForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const name = document.getElementById("userName").value.trim();
-      if (!name) {
-        alert("Digite seu nome!");
-        return;
-      }
+      if (!name) return alert("Digite seu nome!");
 
       const photoInput = document.getElementById("userPhoto");
       let photoData = perfilSalvo?.photo || null;
@@ -181,7 +176,7 @@
       });
 
       localStorage.setItem("perfil", JSON.stringify({ name, photo: photoData, rooms }));
-      alert("Perfil salvo!");
+      alert("Perfil salvo com sucesso!");
       window.location.href = "home.html";
     });
   </script>
