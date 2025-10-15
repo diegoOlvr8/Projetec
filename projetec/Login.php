@@ -33,14 +33,15 @@ if (isset($_POST['Entrar'])){
     Entrar($usuario,$senha,$usuarios_registrados,$senhas_registradas);
 }
 
-function Criar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
+function Criar(){
     header('Location:https://diegoolvr8.github.io/Projetec/projetec/Criar_conta.html');
 }
 
 if (isset($_POST['Criar'])){
-    Criar($usuario,$senha,$usuarios_registrados,$senhas_registradas);
+    Criar();
 }
 ?>
+
 
 
 
