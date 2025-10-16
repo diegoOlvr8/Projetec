@@ -22,7 +22,7 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     }
     if ($senha===$senhas_registradas[$posicao_usuario]){
         echo "Login feito com sucesso";
-        header('Location:https://diegoolvr8.github.io/Projetec/projetec/Pagina_inicial.html');
+        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html');
     }
     else{
         echo "Senha Incorreta";
@@ -41,6 +41,7 @@ if (isset($_POST['Criar'])){
     Criar();
 }
 ?>
+
 
 
 
