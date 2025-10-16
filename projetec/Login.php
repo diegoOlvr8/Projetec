@@ -4,7 +4,7 @@ $usuario = $_POST['usuario'] ?? '';
 $senha = $_POST['senha'] ?? '';
 
 if (!isset($_SESSION['usuarios'])){
-    $_SESSION['usuarios']=['adm'];
+    $_SESSION['usuarios']=['adm@gmail.com'];
     $_SESSION['senhas']=['123'];
 }
 
@@ -41,6 +41,7 @@ if (isset($_POST['Criar'])){
     Criar();
 }
 ?>
+
 
 
 
