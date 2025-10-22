@@ -6,7 +6,7 @@ $file = 'usuarios.txt';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuarios'] ?? '';
-    $senha = $_POST['senhas'] ?? '';
+    $senha = $_POST['senhas'] ?? '';}
 
 
 function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
@@ -34,6 +34,7 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     }
 }
 ?>
+
 
 
 
