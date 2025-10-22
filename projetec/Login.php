@@ -1,44 +1,34 @@
 <?php
 session_start();
-$usuario = $_POST['usuario'] ?? '';
-$senha = $_POST['senha'] ?? '';
 
-if (!isset($_SESSION['usuarios'])){
-    $_SESSION['usuarios']=['adm@gmail.com'];
-    $_SESSION['senhas']=['123'];
-}
+// Arquivo com os usuários e senhas
+$file = 'usuarios.txt';
 
-$usuarios_registrados=&$_SESSION['usuarios'];
-$senhas_registradas=&$_SESSION['senhas'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $usuario = $_POST['usuarios'] ?? '';
+    $senha = $_POST['senhas'] ?? '';
 
+    // Carregue os dados do arquivo
+    $usuarios = file($file, FILE_IGNORE_NEW_LINES);
 
-function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
-    $posicao_usuario=array_search($usuario,$usuarios_registrados);
+    $login_valido = false;
+    
+    foreach ($usuarios as $linha) {
+        list($email, $stored_password) = explode(':', $linha);
 
-
-    if ($posicao_usuario===false){
-        echo "Usuario não encontrado";
-        return;
+        if ($usuario === $email && $senha === $stored_password) {
+            $login_valido = true;
+            break;
+        }
     }
-    if ($senha===$senhas_registradas[$posicao_usuario]){
-        echo "Login feito com sucesso";
-        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html');
-    }
-    else{
-        echo "Senha Incorreta";
-        return;
-    }
-}
-if (isset($_POST['Entrar'])){
-    Entrar($usuario,$senha,$usuarios_registrados,$senhas_registradas);
-}
 
-function Criar(){
-    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Criar_conta.html');
-}
-
-if (isset($_POST['Criar'])){
-    Criar();
+    if ($login_valido) {
+        $_SESSION['usuario'] = $usuario;
+        echo "Login realizado com sucesso!";
+        header('Location: home.php'); // Redireciona para a página principal
+    } else {
+        echo "Usuário ou senha inválidos.";
+    }
 }
 ?>
 
