@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $usuario = $_POST['usuarios'] ?? '';
     $senha = $_POST['senhas'] ?? '';
 
+
+function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
+    $posicao_usuario=array_search($usuario,$usuarios_registrados);
     // Carregue os dados do arquivo
     $usuarios = file($file, FILE_IGNORE_NEW_LINES);
 
@@ -31,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
 
 
 
