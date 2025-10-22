@@ -1,6 +1,6 @@
 <?php 
-$criar_usuario=$_POST['criar_usuarios']?? '';
-$criar_senha=$_POST['criar_senhas']?? '';
+$criar_usuario=$_POST['usuarios']?? '';
+$criar_senha=$_POST['senhas']?? '';
 $confirmacao=$_POST['confirmar']?? '';
 
 if ($confirmacao===$criar_senha){
@@ -13,3 +13,4 @@ if ($confirmacao!==$criar_senha){
     header('Location:https://diegoolvr8.github.io/Projetec/projetec/Criar_conta.html');
 }
 ?>
+
