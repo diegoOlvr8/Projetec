@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Arquivo com os usuários e senhas
+
 $file = 'usuarios.txt';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     $posicao_usuario=array_search($usuario,$usuarios_registrados);
-    // Carregue os dados do arquivo
+   
     $usuarios = file($file, FILE_IGNORE_NEW_LINES);
 
     $login_valido = false;
@@ -28,12 +28,13 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     if ($login_valido) {
         $_SESSION['usuario'] = $usuario;
         echo "Login realizado com sucesso!";
-        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html'); // Redireciona para a página principal
+        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html'); 
     } else {
         echo "Usuário ou senha inválidos.";
     }
 }
 ?>
+
 
 
 
