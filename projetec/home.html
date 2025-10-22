@@ -51,6 +51,82 @@
   </div>
 
   <script>
+
+    function verificarTarefasRecorrentes() {
+        const perfil = JSON.parse(localStorage.getItem("perfil"));
+        if (!perfil || !perfil.rooms) return;
+
+        const agora = new Date();
+        const diaAtual = agora.getDay();
+        
+        const ultimaChecagemKey = 'ultimaChecagemRecorrente';
+
+        let dataUltimaChecagem = new Date(localStorage.getItem(ultimaChecagemKey) || 0); 
+        
+        const umDiaAtras = new Date(agora.getTime() - (24 * 60 * 60 * 1000));
+        if (dataUltimaChecagem < umDiaAtras) {
+            dataUltimaChecagem = umDiaAtras;
+        }
+
+
+        perfil.rooms.forEach(comodo => {
+            const roomKey = comodo.key;
+            
+            const todasAsTarefas = JSON.parse(localStorage.getItem(`${roomKey}_tarefas`) || '[]');
+            
+            const regrasRecorrentes = todasAsTarefas.filter(t => t.isRecorrente && t.recorrencia);
+            
+            if (regrasRecorrentes.length === 0) return;
+
+            const novasTarefasGeradas = [];
+
+            regrasRecorrentes.forEach(regra => {
+                const recorrencia = regra.recorrencia;
+
+                if (recorrencia.dias && recorrencia.dias.includes(diaAtual)) {
+                    
+                    const dataDeHojeComHoraDaRegra = new Date();
+                    dataDeHojeComHoraDaRegra.setHours(parseInt(recorrencia.hora));
+                    dataDeHojeComHoraDaRegra.setMinutes(parseInt(recorrencia.minuto));
+                    dataDeHojeComHoraDaRegra.setSeconds(0);
+                    dataDeHojeComHoraDaRegra.setMilliseconds(0);
+                    
+
+                    if (dataDeHojeComHoraDaRegra > dataUltimaChecagem && dataDeHojeComHoraDaRegra <= agora) {
+                        
+                        const dataParaExibicao = dataDeHojeComHoraDaRegra.toLocaleString();
+
+                        const jaExisteHoje = todasAsTarefas.some(t => 
+                            !t.isRecorrente && t.nome === regra.nome && t.data === dataParaExibicao
+                        );
+
+                        if (!jaExisteHoje) {
+
+                            const novaTarefaInstancia = {
+                                nome: regra.nome, 
+                                data: dataParaExibicao,
+                                isRecorrente: false,
+                                geradaPorRecorrencia: true
+                            };
+                            novasTarefasGeradas.push(novaTarefaInstancia);
+                            console.log(`Tarefa Gerada: ${regra.nome} para ${dataParaExibicao}`);
+                        }
+                    }
+                }
+            });
+            
+            if (novasTarefasGeradas.length > 0) {
+                const listaAtualizada = todasAsTarefas.concat(novasTarefasGeradas);
+                localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(listaAtualizada));
+                console.log(`[Recorrência] Geradas ${novasTarefasGeradas.length} tarefas para ${comodo.label}.`);
+            }
+        });
+        
+        localStorage.setItem(ultimaChecagemKey, agora.toISOString());
+    }
+
+    verificarTarefasRecorrentes(); 
+
     document.addEventListener("DOMContentLoaded", () => {
       const perfil = JSON.parse(localStorage.getItem("perfil"));
       if (!perfil) {
@@ -82,8 +158,8 @@
         col.innerHTML = `
           <a href="room.html?key=${encodeURIComponent(room.key)}">
             <img src="${defaultImgs[room.type] || "placeholder.jpg"}"
-                 alt="${room.label}"
-                 class="img-fluid rounded" style="max-width:90%;">
+                  alt="${room.label}"
+                  class="img-fluid rounded" style="max-width:90%;">
             <h5 class="text-center mt-2">${room.label}</h5>
           </a>`;
         cardsRow.appendChild(col);
@@ -92,5 +168,3 @@
   </script>
 </body>
 </html>
-
-
