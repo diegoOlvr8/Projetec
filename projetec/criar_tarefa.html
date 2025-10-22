@@ -41,6 +41,34 @@
         </select>
       </div>
 
+      <div class="mb-3 form-check">
+        <input class="form-check-input" type="checkbox" id="recorrenteCheck">
+        <label class="form-check-label" for="recorrenteCheck">
+          Tarefa Recorrente?
+        </label>
+      </div>
+
+      <div id="recorrenciaCampos" style="display: none;" class="p-3 border rounded mb-3">
+        <h5 class="mb-3">Configurar Recorrência</h5>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="horaSelect" class="form-label">Hora:</label>
+            <select class="form-select" id="horaSelect">
+              </select>
+          </div>
+          <div class="col-md-6">
+            <label for="minutoSelect" class="form-label">Minuto:</label>
+            <select class="form-select" id="minutoSelect">
+              </select>
+          </div>
+        </div>
+
+        <label class="form-label">Dias da Semana:</label>
+        <div id="diasDaSemana" class="d-flex flex-wrap gap-2">
+          </div>
+        <div class="form-text">Clique para selecionar/desselecionar os dias.</div>
+      </div>
       <button type="button" class="btn btn-primary" onclick="criarTarefa()">Criar Tarefa</button>
     </form>
   </div>
@@ -130,7 +158,6 @@
       ]
     };
 
-    
     const perfil = JSON.parse(localStorage.getItem('perfil'));
     if (!perfil) {
       window.location.href = 'profile.html';
@@ -138,9 +165,62 @@
 
     const roomSelect = document.getElementById('roomSelect');
     const taskSelect = document.getElementById('taskSelect');
-    const nomeTarefaInput = document.getElementById('nome-tarefa');
-
+    const nomeTarefaInput = document.getElementById('nome-tarefa'); 
     
+    const recorrenteCheck = document.getElementById('recorrenteCheck');
+    const recorrenciaCampos = document.getElementById('recorrenciaCampos');
+    const horaSelect = document.getElementById('horaSelect');
+    const minutoSelect = document.getElementById('minutoSelect');
+    const diasDaSemanaDiv = document.getElementById('diasDaSemana');
+    const diasSemana = [
+      { nome: 'Dom', valor: 0 }, { nome: 'Seg', valor: 1 }, { nome: 'Ter', valor: 2 }, 
+      { nome: 'Qua', valor: 3 }, { nome: 'Qui', valor: 4 }, { nome: 'Sex', valor: 5 }, 
+      { nome: 'Sáb', valor: 6 }
+    ];
+    
+    function gerarOpcoesTempo() {
+      for (let i = 0; i < 24; i++) {
+        const hora = String(i).padStart(2, '0');
+        const opt = document.createElement('option');
+        opt.value = hora;
+        opt.textContent = hora;
+        horaSelect.appendChild(opt);
+      }
+      for (let i = 0; i < 60; i += 5) {
+        const minuto = String(i).padStart(2, '0');
+        const opt = document.createElement('option');
+        opt.value = minuto;
+        opt.textContent = minuto;
+        minutoSelect.appendChild(opt);
+      }
+      horaSelect.value = "10";
+      minutoSelect.value = "00";
+    }
+
+    function gerarBotoesDias() {
+      diasSemana.forEach(dia => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.classList.add('btn', 'btn-outline-secondary', 'btn-sm');
+        btn.textContent = dia.nome;
+        btn.dataset.diaValor = dia.valor;
+        btn.dataset.selecionado = 'false';
+
+        btn.addEventListener('click', () => {
+          if (btn.dataset.selecionado === 'false') {
+            btn.dataset.selecionado = 'true';
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-primary');
+          } else {
+            btn.dataset.selecionado = 'false';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-secondary');
+          }
+        });
+        diasDaSemanaDiv.appendChild(btn);
+      });
+    }
+
     perfil.rooms.forEach(r => {
       const opt = document.createElement('option');
       opt.value = r.key;
@@ -149,7 +229,6 @@
       roomSelect.appendChild(opt);
     });
 
-    
     roomSelect.addEventListener('change', () => {
       const selOpt = roomSelect.selectedOptions[0];
       if (!selOpt) {
@@ -174,32 +253,33 @@
       }
     });
 
-    
     nomeTarefaInput.addEventListener('input', () => {
       if (nomeTarefaInput.value.trim() !== '') {
         taskSelect.value = '';
       }
     });
 
-  
     taskSelect.addEventListener('change', () => {
       if (taskSelect.value !== '') {
         nomeTarefaInput.value = '';
       }
     });
 
-    
+    recorrenteCheck.addEventListener('change', () => {
+      recorrenciaCampos.style.display = recorrenteCheck.checked ? 'block' : 'none';
+    });
+
     function criarTarefa() {
       const roomKey = roomSelect.value;
       const tarefaSelecionada = taskSelect.value.trim();
       const tarefaDigitada = nomeTarefaInput.value.trim();
+      const isRecorrente = recorrenteCheck.checked; 
 
       if (!roomKey) {
         alert('Escolha um cômodo.');
         return;
       }
 
-      
       if (tarefaDigitada && tarefaSelecionada) {
         alert('Por favor, preencha apenas um dos campos: ou digite uma tarefa, ou selecione uma tarefa pré-definida.');
         return;
@@ -214,18 +294,49 @@
 
       const novaTarefa = {
         nome: nomeTarefa,
-        data: new Date().toLocaleString()
+        data: new Date().toLocaleString(),
+        isRecorrente: isRecorrente
       };
+      
+      if (isRecorrente) {
+        const hora = horaSelect.value;
+        const minuto = minutoSelect.value;
+        
+        const diasSelecionados = Array.from(diasDaSemanaDiv.querySelectorAll('button[data-selecionado="true"]'))
+                                       .map(btn => parseInt(btn.dataset.diaValor)); 
+
+        if (diasSelecionados.length === 0) {
+            alert('Por favor, selecione pelo menos um dia da semana para a tarefa recorrente.');
+            return;
+        }
+
+        novaTarefa.recorrencia = {
+          hora: hora,
+          minuto: minuto,
+          dias: diasSelecionados
+        };
+      }
+
 
       const lista = JSON.parse(localStorage.getItem(`${roomKey}_tarefas`) || '[]');
       lista.push(novaTarefa);
       localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(lista));
 
-      alert(`Tarefa "${nomeTarefa}" criada para ${roomSelect.selectedOptions[0].textContent}.`);
+      alert(`Tarefa "${nomeTarefa}" criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
 
       document.getElementById('tarefaForm').reset();
       taskSelect.disabled = true;
+      
+      recorrenciaCampos.style.display = 'none';
+      diasDaSemanaDiv.querySelectorAll('button').forEach(btn => {
+          btn.dataset.selecionado = 'false';
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-outline-secondary');
+      });
     }
+    
+    gerarOpcoesTempo();
+    gerarBotoesDias();
   </script>
 
   <style>
@@ -238,6 +349,3 @@
   </style>
 </body>
 </html>
-
-
-
