@@ -28,12 +28,13 @@ function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
     if ($login_valido) {
         $_SESSION['usuario'] = $usuario;
         echo "Login realizado com sucesso!";
-        header('Location: home.php'); // Redireciona para a página principal
+        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html'); // Redireciona para a página principal
     } else {
         echo "Usuário ou senha inválidos.";
     }
 }
 ?>
+
 
 
 
