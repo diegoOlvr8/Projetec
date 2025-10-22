@@ -11,13 +11,12 @@
             box-sizing: border-box;
             font-family: "Poppins", sans-serif;
         }
-        
-        img{
+
+        img {
             height: 150px;
             width: 150px;
             margin: 20px;
-
-    }
+        }
 
         body {
             height: 100vh;
@@ -39,8 +38,7 @@
             animation: fadeIn 0.6s ease-in-out;
         }
 
-        input[type="email"],
-        input[type="password"] {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -51,20 +49,7 @@
             transition: 0.3s;
         }
 
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: dodgerblue;
-            box-shadow: 0 0 8px rgba(30, 144, 255, 0.3);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        input[type="submit"] {
+        input[type="submit"], button {
             width: 48%;
             padding: 10px;
             border: none;
@@ -93,35 +78,25 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
     <form action="http://localhost/Login.php" method="post">
-    <img src="logoputeirododavicinza.png" alt="">
-    <h2>Login</h2>
-    <input class="nom" type="email" id="email" name="usuarios" placeholder="Email" required>
-    <input class="senh" type="password" name="senhas" placeholder="Senha" required>
-    <div class="btn-container">
-        <input class="penetrar" type="submit" name="Entrar" value="Entrar">
-        <input class="procriar" type="submit" name="Criar" value="Criar Conta" formnovalidate>
-    </div>
-</form>
+        <img src="logoputeirododavicinza.png" alt="">
+        <h2>Login</h2>
+        <input type="email" name="usuarios" placeholder="Email" required>
+        <input type="password" name="senhas" placeholder="Senha" required>
+        
+        <div class="btn-container">
+            <input class="penetrar" type="submit" name="Entrar" value="Entrar">
+            <button type="button" class="procriar" onclick="window.location.href='Criar_conta.html'">Criar Conta</button>
+        </div>
+    </form>
 </body>
 </html>
-
-
-
-
-
 
 
 
