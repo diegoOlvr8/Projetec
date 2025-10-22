@@ -10,7 +10,7 @@ if ($confirmacao===$criar_senha){
 
 if ($confirmacao!==$criar_senha){
     echo "senhas diferentes";
-    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Criar_conta.html');
+    header('Location:https://diegoolvr8.github.io/Projetec/projetec/profile.html');
 }
 ?>
 
