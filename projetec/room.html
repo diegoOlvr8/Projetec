@@ -49,19 +49,27 @@
       }
 
       tarefasSalvas.forEach((tarefa, index) => {
+
+        if (tarefa.isRecorrente) return; 
+        
         const item = document.createElement('li');
         item.className = 'list-group-item d-flex justify-content-between align-items-center';
 
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'form-check-input me-2';
+
+        checkbox.dataset.index = index; 
+        
         checkbox.addEventListener('change', () => {
           item.classList.toggle('text-decoration-line-through', checkbox.checked);
           verificarConcluidas();
         });
 
         const texto = document.createElement('span');
-        texto.textContent = `${tarefa.nome} (Criada em: ${tarefa.data})`;
+
+        const recorrenciaLabel = tarefa.geradaPorRecorrencia ? ' (Recorrente)' : ''; 
+        texto.textContent = `${tarefa.nome} (Criada em: ${tarefa.data})${recorrenciaLabel}`;
 
         item.appendChild(checkbox);
         item.appendChild(texto);
@@ -75,24 +83,38 @@
       btnRemover.style.display = algumaMarcada ? 'block' : 'none';
     }
 
+
     btnRemover.addEventListener('click', () => {
       const novasTarefas = [];
       const tarefasSalvas = JSON.parse(localStorage.getItem(`${roomKey}_tarefas`) || '[]');
       const historicoSalvo = JSON.parse(localStorage.getItem(`${roomKey}_historico`) || '[]');
 
-      listaTarefas.querySelectorAll('li').forEach((li, index) => {
-        const checkbox = li.querySelector('input[type=checkbox]');
-        const span = li.querySelector('span');
-        const nomeCompleto = span.textContent;
-        const tarefaNome = nomeCompleto.split(' (Criada em: ')[0];
 
-        if (checkbox.checked) {
-          const dataConclusao = new Date().toLocaleString();
-          historicoSalvo.push({ nome: tarefaNome, dataConclusao });
-        } else {
-          novasTarefas.push(tarefasSalvas[index]);
-        }
+      const checkboxes = Array.from(listaTarefas.querySelectorAll('input[type=checkbox]'));
+      let checkboxIndex = 0;
+
+      tarefasSalvas.forEach(tarefaOriginal => {
+          
+
+          if (tarefaOriginal.isRecorrente) {
+              novasTarefas.push(tarefaOriginal);
+              return;
+          }
+
+          const checkbox = checkboxes[checkboxIndex];
+          
+          if (checkbox && checkbox.checked) {
+
+              const dataConclusao = new Date().toLocaleString();
+              historicoSalvo.push({ nome: tarefaOriginal.nome, dataConclusao }); 
+          } else {
+
+              novasTarefas.push(tarefaOriginal);
+          }
+          
+          checkboxIndex++;
       });
+
 
       localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(novasTarefas));
       localStorage.setItem(`${roomKey}_historico`, JSON.stringify(historicoSalvo));
@@ -117,9 +139,9 @@
 
         const texto = document.createElement('span');
         texto.textContent = `${h.nome} - Concluída em: ${h.dataConclusao}`;
-        
+
         const checkIcon = document.createElement('i');
-        checkIcon.className = 'fas fa-check-circle text-success ms-2'; 
+        checkIcon.className = 'fas fa-check-circle text-success ms-2';
 
         item.appendChild(texto);
         item.appendChild(checkIcon);
