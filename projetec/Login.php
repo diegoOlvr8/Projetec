@@ -21,6 +21,7 @@ if (isset($_POST['Entrar'])) {
 
         if ($loginValido) {
             header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html');
+            exit();
         } else {
             echo "<script>alert('Email ou senha incorretos!'); window.history.back();</script>";
         }
@@ -29,6 +30,7 @@ if (isset($_POST['Entrar'])) {
     }
 }
 ?>
+
 
 
 
