@@ -1,21 +1,23 @@
 <?php
-$file = 'usuarios.txt';
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['usuarios'] ?? '';
-    $senha = $_POST['senhas'] ?? '';
-    $confirmar = $_POST['confirmar'] ?? '';
+if (isset($_POST['Criar'])) {
+    $email = $_POST['usuarios'];
+    $senha = $_POST['senhas'];
+    $confirmar = $_POST['confirmar'];
 
     if ($senha !== $confirmar) {
-        echo "As senhas não coincidem.";
-        exit;
+        echo "<script>alert('As senhas não coincidem!'); window.history.back();</script>";
+        exit();
     }
 
-   
-    $dados = "$email:$senha\n";
-    file_put_contents($file, $dados, FILE_APPEND);
     
-    echo "Conta criada com sucesso!";
-    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Login.html'); 
+    $arquivo = 'usuarios.txt';
+
+  
+    $linha = $email . ";" . $senha . PHP_EOL;
+    file_put_contents($arquivo, $linha, FILE_APPEND);
+
+    
+    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Login.html');
+    exit();
 }
 ?>
