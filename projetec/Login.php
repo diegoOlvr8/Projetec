@@ -1,43 +1,35 @@
 <?php
-session_start();
+if (isset($_POST['Entrar'])) {
+    $email = $_POST['usuarios'];
+    $senha = $_POST['senhas'];
 
-
-$file = 'usuarios.txt';
-
-function Criar(){
-    header('Location:https://diegoolvr8.github.io/Projetec/projetec/Criar_conta.html');
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $usuario = $_POST['usuarios'] ?? '';
-    $senha = $_POST['senhas'] ?? '';}
-
-function Entrar($usuario,$senha,&$usuarios_registrados,&$senhas_registradas){
-    $posicao_usuario=array_search($usuario,$usuarios_registrados);
-   
-    $usuarios = file($file, FILE_IGNORE_NEW_LINES);
-
-    $login_valido = false;
     
-    foreach ($usuarios as $linha) {
-        list($email, $stored_password) = explode(':', $linha);
+    $arquivo = 'usuarios.txt';
 
-        if ($usuario === $email && $senha === $stored_password) {
-            $login_valido = true;
-            break;
+    if (file_exists($arquivo)) {
+        $usuarios = file($arquivo, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+        $loginValido = false;
+
+        foreach ($usuarios as $usuario) {
+            list($emailSalvo, $senhaSalva) = explode(";", $usuario);
+            if ($email === $emailSalvo && $senha === $senhaSalva) {
+                $loginValido = true;
+                break;
+            }
         }
-    }
 
-    if ($login_valido) {
-        $_SESSION['usuario'] = $usuario;
-        echo "Login realizado com sucesso!";
-        header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html'); 
+        if ($loginValido) {
+            header('Location:https://diegoolvr8.github.io/Projetec/projetec/home.html');
+            exit();
+        } else {
+            echo "<script>alert('Email ou senha incorretos!'); window.history.back();</script>";
+        }
     } else {
-        echo "Usuário ou senha inválidos.";
+        echo "<script>alert('Arquivo de usuários não encontrado!'); window.history.back();</script>";
     }
 }
 ?>
-
 
 
 
