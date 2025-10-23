@@ -1,43 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="http://localhost/Criar_conta.php" method="post">
-    <img src="usuario.png" alt="">
-    <h2>Criar Conta</h2>
-    <input class="nom" type="email" name="usuarios" placeholder="Email" required>
-    <input class="senh" type="password" name="senhas" placeholder="Senha" required>
-    <input class="confirmar" type="password" name="confirmar" placeholder="Confirmar senha" required>
-    <div class="btn-container">
-        <input class="procriar" type="submit" name="Criar" value="Criar Conta">
-    </div>
-</form>
-
+    <title>Criar Conta</title>
     <style>
-        #olhar_senha{
-            width: 30px;
-            height: 30px;
-            position: relative;
-            top: 20px;
-            left: 10px;
-        }
-                * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: "Poppins", sans-serif;
         }
-        
+
         img{
             height: 150px;
             width: 150px;
             margin: 20px;
-
-    }
+        }
 
         body {
             height: 100vh;
@@ -59,8 +38,7 @@
             animation: fadeIn 0.6s ease-in-out;
         }
 
-        input[type="email"],
-        input[type="password"] {
+        input[type="email"], input[type="password"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -71,54 +49,43 @@
             transition: 0.3s;
         }
 
-        input[type="email"]:focus,
-        input[type="password"]:focus {
-            border-color: dodgerblue;
-            box-shadow: 0 0 8px rgba(30, 144, 255, 0.3);
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 15px;
-        }
-
         input[type="submit"] {
-            width: 48%;
+            width: 100%;
             padding: 10px;
             border: none;
             border-radius: 8px;
             font-size: 17px;
             cursor: pointer;
+            background-color: dodgerblue;
+            color: white;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
-
-        .procriar {
-            background-color: #f0f0f0;
-            color: #333;
-            position: relative;
-            left: 65px;
-        }
-
-        .procriar:hover {
-            background-color: #ddd;
+        input[type="submit"]:hover {
+            background-color: #005ecb;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
-</body>
+</head>
+<body>
 
+<form action="http://localhost/Criar_conta.php" method="post">
+    <img src="usuario.png" alt="">
+    <h2>Criar Conta</h2>
+    <input type="email" name="usuarios" placeholder="Email" required>
+    <input type="password" name="senhas" placeholder="Senha" required>
+    <input type="password" name="confirmar" placeholder="Confirmar Senha" required>
+    <input type="submit" name="Criar" value="Criar Conta">
+</form>
+
+</body>
 </html>
+
+
 
 
