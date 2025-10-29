@@ -13,7 +13,7 @@ if (isset($_POST['Entrar'])) {
 
         foreach ($usuarios as $usuario) {
             list($emailSalvo, $senhaSalva) = explode(";", $usuario);
-            if ($email === $emailSalvo && $senha === $senhaSalva) {
+            if (in_array($email, $emailSalvo) && in_array($senha, $senhaSalva)) {
                 $loginValido = true;
                 break;
             }
@@ -30,6 +30,7 @@ if (isset($_POST['Entrar'])) {
     }
 }
 ?>
+
 
 
 
