@@ -77,13 +77,14 @@
     function addRoomSelector(saved) {
       roomIdx++;
       const wrapper = document.createElement("div");
-      wrapper.className = "input-group mb-2 d-flex align-items-center";
+      wrapper.className = "input-group mb-3 d-flex align-items-center";
       wrapper.dataset.index = roomIdx;
       wrapper.setAttribute("draggable", "true");
 
       wrapper.innerHTML = `
         <div class="drag-handle" title="Arraste para reordenar" aria-label="Reordenar cômodo">≡</div>
-        <select class="form-select room-type flex-grow-0" style="width: 150px;">
+
+        <select class="form-select room-type" style="width: 150px;">
           ${Object.entries(roomTypes)
             .map(
               ([k, v]) =>
@@ -93,15 +94,33 @@
             )
             .join("")}
         </select>
-        <input type="text" class="form-control room-label mx-2" placeholder="Nome do cômodo"
-               value="${saved ? saved.label : ""}" />
-        <button class="btn btn-danger remove-room" type="button">&times;</button>
+
+        <input type="text" class="form-control room-label mx-2"
+          placeholder="Nome do cômodo"
+          value="${saved ? saved.label : ""}" />
+
+        <input type="file" accept="image/*" class="form-control room-photo"
+          style="max-width:200px;" />
+
+        ${saved && saved.photo ? `<small class="text-success ms-2">Foto já carregada ✔</small>` : ""}
+
+        <button class="btn btn-danger remove-room ms-2" type="button">&times;</button>
       `;
+
       roomPickerDiv.appendChild(wrapper);
+
+      // Preview da imagem salva
+      if (saved && saved.photo) {
+        const preview = document.createElement("img");
+        preview.src = saved.photo;
+        preview.style.maxWidth = "80px";
+        preview.style.marginLeft = "10px";
+        wrapper.appendChild(preview);
+      }
 
       wrapper.querySelector(".remove-room").addEventListener("click", () => wrapper.remove());
 
-      // Drag and drop
+      // DRAG AND DROP
       wrapper.addEventListener("dragstart", (e) => {
         dragSrcEl = wrapper;
         e.dataTransfer.effectAllowed = "move";
@@ -138,6 +157,7 @@
 
     addRoomBtn.addEventListener("click", () => addRoomSelector());
 
+    // Carregar perfil salvo
     const perfilSalvo = JSON.parse(localStorage.getItem("perfil")) || null;
     if (perfilSalvo) {
       document.getElementById("userName").value = perfilSalvo.name || "";
@@ -150,32 +170,53 @@
       );
     }
 
+    // Salvar perfil
     document.getElementById("perfilForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const name = document.getElementById("userName").value.trim();
       if (!name) return alert("Digite seu nome!");
 
       const photoInput = document.getElementById("userPhoto");
       let photoData = perfilSalvo?.photo || null;
+
       if (photoInput.files[0]) {
-        const file = photoInput.files[0];
         photoData = await new Promise((res) => {
           const fr = new FileReader();
           fr.onload = () => res(fr.result);
-          fr.readAsDataURL(file);
+          fr.readAsDataURL(photoInput.files[0]);
         });
       }
 
+      // ----- Salvar cômodos -----
       const rooms = [];
-      document.querySelectorAll("#roomPicker .input-group").forEach((grp, i) => {
+      const groups = document.querySelectorAll("#roomPicker .input-group");
+
+      for (let i = 0; i < groups.length; i++) {
+        const grp = groups[i];
         const type = grp.querySelector(".room-type").value;
         let label = grp.querySelector(".room-label").value.trim();
         if (!label) label = `${roomTypes[type]} ${i + 1}`;
         const key = `${type}-${i + 1}`;
-        rooms.push({ type, key, label });
-      });
+
+        const fileInput = grp.querySelector(".room-photo");
+        let photo = null;
+
+        if (fileInput.files[0]) {
+          photo = await new Promise((resolve) => {
+            const fr = new FileReader();
+            fr.onload = () => resolve(fr.result);
+            fr.readAsDataURL(fileInput.files[0]);
+          });
+        } else if (perfilSalvo?.rooms[i]?.photo) {
+          photo = perfilSalvo.rooms[i].photo;
+        }
+
+        rooms.push({ type, key, label, photo });
+      }
 
       localStorage.setItem("perfil", JSON.stringify({ name, photo: photoData, rooms }));
+
       alert("Perfil salvo com sucesso!");
       window.location.href = "home.html";
     });
