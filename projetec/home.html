@@ -52,6 +52,9 @@
 
   <script>
 
+    /* =============================
+        VERIFICAR TAREFAS RECORRENTES
+    ============================== */
     function verificarTarefasRecorrentes() {
         const perfil = JSON.parse(localStorage.getItem("perfil"));
         if (!perfil || !perfil.rooms) return;
@@ -60,7 +63,6 @@
         const diaAtual = agora.getDay();
         
         const ultimaChecagemKey = 'ultimaChecagemRecorrente';
-
         let dataUltimaChecagem = new Date(localStorage.getItem(ultimaChecagemKey) || 0); 
         
         const umDiaAtras = new Date(agora.getTime() - (24 * 60 * 60 * 1000));
@@ -68,14 +70,11 @@
             dataUltimaChecagem = umDiaAtras;
         }
 
-
         perfil.rooms.forEach(comodo => {
             const roomKey = comodo.key;
             
             const todasAsTarefas = JSON.parse(localStorage.getItem(`${roomKey}_tarefas`) || '[]');
-            
             const regrasRecorrentes = todasAsTarefas.filter(t => t.isRecorrente && t.recorrencia);
-            
             if (regrasRecorrentes.length === 0) return;
 
             const novasTarefasGeradas = [];
@@ -90,7 +89,6 @@
                     dataDeHojeComHoraDaRegra.setMinutes(parseInt(recorrencia.minuto));
                     dataDeHojeComHoraDaRegra.setSeconds(0);
                     dataDeHojeComHoraDaRegra.setMilliseconds(0);
-                    
 
                     if (dataDeHojeComHoraDaRegra > dataUltimaChecagem && dataDeHojeComHoraDaRegra <= agora) {
                         
@@ -101,24 +99,20 @@
                         );
 
                         if (!jaExisteHoje) {
-
-                            const novaTarefaInstancia = {
+                            novasTarefasGeradas.push({
                                 nome: regra.nome, 
                                 data: dataParaExibicao,
                                 isRecorrente: false,
                                 geradaPorRecorrencia: true
-                            };
-                            novasTarefasGeradas.push(novaTarefaInstancia);
-                            console.log(`Tarefa Gerada: ${regra.nome} para ${dataParaExibicao}`);
+                            });
                         }
                     }
                 }
             });
-            
+
             if (novasTarefasGeradas.length > 0) {
                 const listaAtualizada = todasAsTarefas.concat(novasTarefasGeradas);
                 localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(listaAtualizada));
-                console.log(`[Recorrência] Geradas ${novasTarefasGeradas.length} tarefas para ${comodo.label}.`);
             }
         });
         
@@ -127,6 +121,10 @@
 
     verificarTarefasRecorrentes(); 
 
+
+    /* =============================
+              CARREGAR HOME
+    ============================== */
     document.addEventListener("DOMContentLoaded", () => {
       const perfil = JSON.parse(localStorage.getItem("perfil"));
       if (!perfil) {
@@ -141,6 +139,7 @@
       }
 
       const cardsRow = document.getElementById("cardsRow");
+
       const defaultImgs = {
         cozinha: "imagens/cozinha.jpg",
         quarto: "imagens/quarto.jpeg",
@@ -152,22 +151,28 @@
         jardim: "imagens/jardim.jpeg",
       };
 
+      /* =============================
+          EXIBIR CÔMODOS COM FOTO DO USUÁRIO
+      ============================== */
       perfil.rooms.forEach(room => {
         const col = document.createElement("div");
         col.className = "col-12 col-md-4 mb-4 d-flex justify-content-center";
+
+        const fotoDoComodo =
+          room.photo ? room.photo : (defaultImgs[room.type] || "placeholder.jpg");
+
         col.innerHTML = `
           <a href="room.html?key=${encodeURIComponent(room.key)}">
-            <img src="${defaultImgs[room.type] || "placeholder.jpg"}"
+            <img src="${fotoDoComodo}"
                   alt="${room.label}"
-                  class="img-fluid rounded" style="max-width:90%;">
+                  class="img-fluid rounded"
+                  style="max-width:90%; object-fit:cover; height:180px;">
             <h5 class="text-center mt-2">${room.label}</h5>
           </a>`;
+        
         cardsRow.appendChild(col);
       });
     });
   </script>
 </body>
 </html>
-
-
-
