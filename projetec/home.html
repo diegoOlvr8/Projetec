@@ -19,39 +19,157 @@
   ></script>
 
   <style>
-    body { font-family: Arial, sans-serif; }
+    body { 
+      font-family: Arial, sans-serif; 
+      padding-bottom: 80px; 
+    }
     .bg-primary { background-color: dodgerblue !important; }
     .img-fluid { max-width: 100%; height: auto; }
     .logo { height: 80px; width: 80px; }
-    h1 { color: white; text-align: center; padding-left: 15px; }
+    .welcome-title { 
+      color: white; 
+      text-align: center; 
+      margin: 0;
+      flex-grow: 1;
+    }
+    
+    .action-bar-wrapper {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      z-index: 1000;
+    }
+    
+    .action-bar {
+      background: #2a63ff;
+      border-radius: 50px;
+      padding: 8px 24px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      border: 2px solid white;
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.05);
+    }
+    
+    .action-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .add-circle {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+    }
+    
+    .action-btn:hover .add-circle {
+      transform: scale(1.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    
+    .top-bar .logo-container {
+      width: 80px; 
+    }
+    
+    .top-bar .user-container {
+      width: 80px; /
+      display: flex;
+      justify-content: flex-end;
+    }
   </style>
 </head>
 <body>
-  <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
-    <img class="logo" src="imagens/logo_branco.png" alt="Logo" />
-    <h1>Bem-Vindo(a)!</h1>
 
-    <a href="profile.html" class="d-flex align-items-center">
+  <div class="bg-primary text-white p-3 top-bar">
+    <div class="logo-container">
+      <img class="logo" src="imagens/logo_branco.png" alt="Logo" />
+    </div>
+    
+    <h1 class="welcome-title">Bem-Vindo(a)!</h1>
 
-      <img id="userPhoto" src="" alt="Foto do Usuário"
-        style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px; display:none; border: 2px solid white;">
+    <div class="user-container">
+      <a href="profile.html" class="d-flex align-items-center">
+        <img id="userPhoto" src="" alt="Foto do Usuário"
+          style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-right: 8px; display:none; border: 2px solid white;">
 
-      <svg id="defaultIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"
-        class="bi bi-person-circle" viewBox="0 0 16 16">
-        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-      </svg>
-    </a>
+        <svg id="defaultIcon" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white"
+          class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+      </a>
+    </div>
   </div>
 
+  
   <div id="cardsArea" class="container mt-1 pt-4">
     <div id="cardsRow" class="row justify-content-center"></div>
   </div>
 
-  <div class="d-flex justify-content-around fixed-bottom bg-light p-2">
-    <a href="criar_tarefa.html" class="btn btn-primary">
-      <i class="fas fa-plus"></i>
-    </a>
+
+  <div class="action-bar-wrapper">
+    <div class="action-bar">
+      
+      <button class="action-btn" onclick="window.location.href='calendario.html'">
+        <svg width="40" height="40" viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.5">
+          <rect x="3" y="4" width="18" height="17" rx="3"></rect>
+          <line x1="3" y1="9" x2="21" y2="9"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+        </svg>
+      </button>
+
+      <button class="action-btn" onclick="window.location.href='ranking.html'">
+        <svg width="40" height="40" viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.5">
+          <rect x="3" y="10" width="4" height="10" rx="1"></rect>
+          <rect x="10" y="6" width="4" height="14" rx="1"></rect>
+          <rect x="17" y="3" width="4" height="17" rx="1"></rect>
+        </svg>
+      </button>
+
+      <button class="action-btn" onclick="window.location.href='criar_tarefa.html'">
+        <div class="add-circle">
+          <svg width="26" height="26" viewBox="0 0 24 24" stroke="#2a63ff" fill="none" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+      </button>
+
+    </div>
   </div>
 
   <script>
@@ -135,7 +253,6 @@
       if (perfil.photo) {
         userPhotoElem.src = perfil.photo;
         userPhotoElem.style.display = "inline-block";
-
         defaultIcon.style.display = "none";
       }
 
@@ -172,5 +289,6 @@
       });
     });
   </script>
+
 </body>
 </html>
