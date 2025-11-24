@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Calendário Integrado</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  :root{
+    --primary:#2a63fe; 
+    --bg:#f4f6fb;
+    --card:#fff;
+    --muted:#6b7280;
+    --accent:#0b84ff;
+    --done:#10b981;
+    --overdue:#ef4444
+  }
+  html,body{height:100%;margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--bg)}
+  .wrap{max-width:1100px;margin:18px auto;padding:0}
+  .header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border-radius:10px;
+    background:linear-gradient(90deg,var(--primary),#1a4fd8); 
+    color:white
+  }
+  .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+  .month-nav button{background:transparent;border:0;color:white;font-size:1.1rem;padding:6px 8px;border-radius:6px}
+  .month-title{font-weight:700;margin-left:8px}
+  .panel{display:flex;gap:16px;margin-top:14px}
+  .sidebar{width:280px;background:var(--card);border-radius:10px;padding:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}
+  .main{flex:1;background:var(--card);border-radius:10px;padding:12px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}
+  .weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+  .weekday{text-align:center;color:var(--muted);font-weight:700;padding:8px 0}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+  .day{min-height:110px;padding:8px;border-radius:8px;background:#fcfeff;border:1px solid rgba(10,20,40,0.03);position:relative;overflow:hidden}
+  .date-num{position:absolute;top:8px;right:8px;font-weight:700;color:var(--muted);font-size:0.9rem}
+  .outside{opacity:0.45}
+  .task-pill{display:block;margin-top:26px;padding:6px 8px;border-radius:6px;font-size:0.78rem;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .task-pill.room {background:#2a63fe} /* ALTERADO: mesma cor azul */
+  .task-pill.scheduled {background:#8b5cf6}
+  .task-pill.done {background:var(--done);text-decoration:line-through;opacity:0.9}
+  .task-pill.overdue {background:var(--overdue)}
+  .legend{display:flex;gap:8px;flex-wrap:wrap;padding-top:8px;font-size:0.9rem;color:var(--muted)}
+  .legend .dot{width:12px;height:12px;border-radius:4px;display:inline-block;margin-right:6px}
+  
+  .back-btn {
+    background: white;
+    color: #2a63fe;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .back-btn:hover {
+    background: #f8f9fa;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .back-btn:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width:960px){.panel{flex-direction:column}.sidebar{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="header">
+    <div>
+      <div style="font-weight:700;font-size:1.05rem">Calendário</div>
+      <div style="font-size:0.85rem;opacity:0.95">Eventos e tarefas</div>
+    </div>
+
+    <div class="controls">
+      <div class="month-nav d-flex align-items-center">
+        <button id="prev">&lsaquo;</button>
+        <button id="today">Hoje</button>
+        <button id="next">&rsaquo;</button>
+        <span class="month-title" id="monthTitle"></span>
+      </div>
+
+      <button class="back-btn" onclick="window.history.back()">Voltar</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <aside class="sidebar">
+      <div style="display:flex;justify-content:space-between;align-items:center"><strong>Opções</strong><small id="miniMonthLabel" style="color:var(--muted)"></small></div>
+      <div style="margin-top:8px">
+        <label class="small-note">Filtrar por cômodo</label>
+        <select id="filterRoom"><option value="__all">Todos</option></select>
+      </div>
+      <div style="margin-top:8px">
+        <label class="small-note">Procurar</label>
+        <input id="searchInput" class="form-control form-control-sm" placeholder="Título da tarefa...">
+      </div>
+      <hr>
+      <div><strong>Legenda</strong></div>
+      <div class="legend">
+        <span><i class="dot" style="background:#2a63fe"></i> Tarefa do cômodo</span> 
+        <span><i class="dot" style="background:#8b5cf6"></i> Tarefa agendada</span>
+        <span><i class="dot" style="background:var(--done)"></i> Concluída</span>
+        <span><i class="dot" style="background:var(--overdue)"></i> Atrasada</span>
+      </div>
+      <div style="margin-top:12px;font-size:0.9rem;color:var(--muted)">Observação: alterações de conclusão ficam salvas no navegador.</div>
+    </aside>
+
+    <main class="main">
+      <div class="weekdays"><div class="weekday">Dom</div><div class="weekday">Seg</div><div class="weekday">Ter</div><div class="weekday">Qua</div><div class="weekday">Qui</div><div class="weekday">Sex</div><div class="weekday">Sáb</div></div>
+      <div class="grid" id="calendarGrid"></div>
+    </main>
+  </div>
+</div>
+
+<div class="modal fade" id="modalDay" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content">
+    <div class="modal-header"><h5 class="modal-title" id="modalTitle">Eventos do dia</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+    <div class="modal-body">
+      <div id="dayTasksList"></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+    </div>
+  </div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+console.debug('Calendário iniciado');
+const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+let view = new Date();
+const modal = new bootstrap.Modal(document.getElementById('modalDay'));
+const CAL_EVENTS_KEY = 'calendar_scheduled_events_v1';
+const CAL_DONE_KEY = 'calendar_completions_v1';
+
+const perfil = JSON.parse(localStorage.getItem('perfil') || 'null');
+if (!perfil) { alert('Perfil não encontrado. Redirecionando...'); window.location.href = 'profile.html'; }
+const rooms = perfil.rooms || [];
+const filterRoom = document.getElementById('filterRoom');
+
+function populateRooms(){
+  filterRoom.innerHTML = '<option value="__all">Todos</option>';
+  rooms.forEach(r=>{
+    const o = document.createElement('option'); o.value=r.key; o.textContent=r.label; filterRoom.appendChild(o);
+  });
+}
+populateRooms();
+
+function loadScheduled(){ try { return JSON.parse(localStorage.getItem(CAL_EVENTS_KEY) || '[]'); } catch(e){ return []; } }
+function saveScheduled(list){ localStorage.setItem(CAL_EVENTS_KEY, JSON.stringify(list)); }
+function loadCompletions(){ try { return JSON.parse(localStorage.getItem(CAL_DONE_KEY) || '{}'); } catch(e){ return {}; } }
+function saveCompletions(obj){ localStorage.setItem(CAL_DONE_KEY, JSON.stringify(obj)); }
+function occKey(sourceType, sourceId, dateKey){ return `${sourceType}::${sourceId}::${dateKey}`; }
+function dateKeyFromDate(d){ return d.toISOString().slice(0,10); }
+
+function loadRoomTasks(){
+  const all=[];
+  rooms.forEach(r=>{
+    const list = JSON.parse(localStorage.getItem(`${r.key}_tarefas`) || '[]');
+    list.forEach((t, idx)=> all.push({roomKey:r.key, roomLabel:r.label, roomType:r.type, taskIndex: idx, task: t}));
+  });
+  return all;
+}
+
+function generateRecurrencesForMonth(year, month){
+  const out=[];
+  const roomTasks = loadRoomTasks();
+  roomTasks.forEach(entry=>{
+    const t = entry.task;
+    if (t && t.isRecorrente && t.recorrencia && Array.isArray(t.recorrencia.dias)){
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      for(let d=1; d<=daysInMonth; d++){
+        const dt = new Date(year, month, d);
+        if (t.recorrencia.dias.includes(dt.getDay())){
+          const dateKey = dateKeyFromDate(dt);
+          const h = (t.recorrencia.hora||'').toString().padStart(2,'0');
+          const m = (t.recorrencia.minuto||'').toString().padStart(2,'0');
+          const start = (h||'') + (h? ':'+m : '');
+          out.push({ 
+            source:'roomTask', 
+            roomKey:entry.roomKey, 
+            roomLabel:entry.roomLabel, 
+            taskIndex: entry.taskIndex, 
+            title: t.nome, 
+            dateKey, 
+            start: start || '', 
+            original: t,
+            pontos: t.pontos 
+          });
+        }
+      }
+    }
+  });
+  return out;
+}
+
+function extractGeneratedTasksForMonth(year, month){
+  const out=[];
+  const roomTasks = loadRoomTasks();
+  roomTasks.forEach(entry=>{
+    const t = entry.task;
+    if (!t) return;
+    if (!t.isRecorrente && (t.data || t.geradaPorRecorrencia)){
+      const parsed = new Date(t.data);
+      if (!isNaN(parsed) && parsed.getFullYear()===year && parsed.getMonth()===month){
+        out.push({ 
+          source:'roomTaskGen', 
+          roomKey: entry.roomKey, 
+          roomLabel: entry.roomLabel, 
+          taskIndex: entry.taskIndex, 
+          title: t.nome, 
+          dateKey: dateKeyFromDate(parsed), 
+          start: parsed.toTimeString().slice(0,5), 
+          original: t,
+          pontos: t.pontos 
+        });
+      }
+    }
+  });
+  return out;
+}
+
+function extractSingleTasksForMonth(year, month) {
+  const out = [];
+  const roomTasks = loadRoomTasks();
+  
+  roomTasks.forEach(entry => {
+    const t = entry.task;
+    if (!t) return;
+    
+    if (!t.isRecorrente && t.dataISO) {
+      const parsed = new Date(t.dataISO);
+      if (!isNaN(parsed) && parsed.getFullYear() === year && parsed.getMonth() === month) {
+        out.push({
+          source: 'singleTask',
+          roomKey: entry.roomKey,
+          roomLabel: entry.roomLabel,
+          taskIndex: entry.taskIndex,
+          title: t.nome,
+          dateKey: dateKeyFromDate(parsed),
+          start: t.hora || parsed.toTimeString().slice(0,5),
+          original: t,
+          pontos: t.pontos
+        });
+      }
+    }
+  });
+  return out;
+}
+
+function scheduledEventsForMonth(year, month){
+  return loadScheduled().filter(ev=>{
+    const d = new Date(ev.date);
+    return d.getFullYear()===year && d.getMonth()===month;
+  }).map(ev=>Object.assign({source:'sched'}, ev));
+}
+
+function buildOccurrencesForMonth(year, month, filterRoomKey='__all', searchText=''){
+  const occ=[];
+  occ.push(...generateRecurrencesForMonth(year, month));
+  occ.push(...extractGeneratedTasksForMonth(year, month));
+  occ.push(...extractSingleTasksForMonth(year, month)); 
+  occ.push(...scheduledEventsForMonth(year, month));
+  
+  const filtered = occ.filter(o=>{
+    if (filterRoomKey !== '__all' && o.roomKey && o.roomKey !== filterRoomKey) return false;
+    if (searchText) return o.title.toLowerCase().includes(searchText.toLowerCase());
+    return true;
+  });
+  
+  const map={};
+  filtered.forEach(o=> { 
+    map[o.dateKey] = map[o.dateKey] || []; 
+    map[o.dateKey].push(o); 
+  });
+  return map;
+}
+
+function renderCalendar(){
+  const year = view.getFullYear(), month = view.getMonth();
+  document.getElementById('monthTitle').textContent = `${monthNames[month]} ${year}`;
+  const first = new Date(year, month, 1);
+  const startIdx = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const prevMonthLast = new Date(year, month, 0).getDate();
+  const filterRoomKey = document.getElementById('filterRoom').value;
+  const searchText = document.getElementById('searchInput').value.trim();
+  const occMap = buildOccurrencesForMonth(year, month, filterRoomKey, searchText);
+  const grid = document.getElementById('calendarGrid'); grid.innerHTML = '';
+
+  for(let i=0;i<42;i++){
+    const cell = document.createElement('div'); cell.className='day';
+    let dayNum, cellDate, outside=false;
+    const idx = i - startIdx + 1;
+    if (idx <= 0){ dayNum = prevMonthLast + idx; cellDate = new Date(year, month-1, dayNum); outside = true; }
+    else if (idx > daysInMonth){ dayNum = idx - daysInMonth; cellDate = new Date(year, month+1, dayNum); outside = true; }
+    else { dayNum = idx; cellDate = new Date(year, month, dayNum); }
+    if (outside) cell.classList.add('outside');
+    const dateKey = dateKeyFromDate(cellDate);
+    cell.innerHTML = `<div class="date-num">${dayNum}</div>`;
+
+    const list = (occMap[dateKey] || []).slice().sort((a,b)=> (a.start||'').localeCompare(b.start||''));
+    list.slice(0,3).forEach(it=>{
+      const span = document.createElement('span'); span.className='task-pill';
+      if (it.source === 'sched') span.classList.add('scheduled'); 
+      else if (it.source === 'singleTask') span.classList.add('room');
+      else span.classList.add('room');
+      
+      const key = occKey(it.source==='sched' ? 'sched' : 'roomTask', (it.source==='sched'?it.id:(it.roomKey+'_'+it.taskIndex)), dateKey);
+      const doneMap = loadCompletions(); const done = !!doneMap[key];
+      if (done) span.classList.add('done');
+      if (!done && it.start){
+        const now = new Date();
+        const evDateTime = new Date(dateKey + 'T' + (it.start||'00:00'));
+        if (evDateTime < now && dateKey === dateKeyFromDate(now)) span.classList.add('overdue');
+      }
+      span.textContent = (it.start ? (it.start + ' ') : '') + it.title;
+      span.addEventListener('click', (ev)=>{ ev.stopPropagation(); openDayModal(dateKey, it); });
+      cell.appendChild(span);
+    });
+
+    if ((occMap[dateKey] || []).length > 3){
+      const more = document.createElement('div'); more.style.marginTop='6px'; more.style.fontSize='0.78rem'; more.style.color='var(--muted)';
+      more.textContent = `+ ${ (occMap[dateKey]||[]).length - 3 } evento(s)`; more.addEventListener('click', ()=> openDayModal(dateKey));
+      cell.appendChild(more);
+    }
+
+    cell.addEventListener('click', ()=> openDayModal(dateKey));
+    grid.appendChild(cell);
+  }
+  console.debug('Calendar rendered for', monthNames[view.getMonth()], view.getFullYear());
+}
+
+function openDayModal(dateKey, focusItem){
+  document.getElementById('modalTitle').textContent = `Eventos em ${dateKey}`;
+  renderDayList(dateKey, focusItem);
+  modal.show();
+}
+
+function renderDayList(dateKey, focusItem){
+  const container = document.getElementById('dayTasksList'); 
+  container.innerHTML = '';
+  const year = parseInt(dateKey.slice(0,4)), month = parseInt(dateKey.slice(5,7))-1;
+  const occMap = buildOccurrencesForMonth(year, month);
+  const items = occMap[dateKey] ? [...occMap[dateKey]] : [];
+  const scheduled = loadScheduled().filter(ev => ev.date === dateKey);
+  scheduled.forEach(s => { 
+    if (!items.some(it => it.source==='sched' && it.id===s.id)) 
+      items.push(Object.assign({source:'sched'}, s)); 
+  });
+
+  if (items.length === 0){
+    container.innerHTML = `<div style="color:var(--muted)">Nenhum evento neste dia.</div>`;
+  } else {
+    items.sort((a,b)=> (a.start||'').localeCompare(b.start||''));
+    items.forEach(it=>{
+      const row = document.createElement('div'); 
+      row.style.padding='8px'; 
+      row.style.borderBottom='1px solid rgba(0,0,0,0.04)';
+      
+      const left = document.createElement('div'); 
+      left.style.display='flex'; 
+      left.style.justifyContent='space-between'; 
+      left.style.alignItems='center';
+      
+      const pontosInfo = it.pontos ? `<small style="color: var(--accent); font-weight: bold;">${it.pontos} pts</small>` : '';
+      
+      const title = document.createElement('div'); 
+      title.innerHTML = `
+        <strong>${it.title}</strong>
+        <div style="color:var(--muted);font-size:0.85rem">
+          ${it.roomLabel? it.roomLabel : ''} 
+          ${it.start? ' • ' + it.start : ''}
+          ${pontosInfo}
+        </div>
+      `;
+      left.appendChild(title);
+      
+      const controls = document.createElement('div'); 
+      controls.style.display='flex'; 
+      controls.style.gap='6px';
+      const key = occKey(it.source === 'sched' ? 'sched' : 'roomTask', (it.source==='sched'?it.id:(it.roomKey+'_'+it.taskIndex)), dateKey);
+      const doneMap = loadCompletions(); 
+      const done = !!doneMap[key];
+
+      const doneBtn = document.createElement('button'); 
+      doneBtn.className = 'btn btn-sm ' + (done ? 'btn-success' : 'btn-outline-success'); 
+      doneBtn.textContent = done ? 'Concluída' : 'Marcar Concluída';
+      doneBtn.addEventListener('click', ()=>{
+        const map = loadCompletions(); 
+        if (map[key]) delete map[key]; 
+        else map[key] = {ts: Date.now()}; 
+        saveCompletions(map); 
+        renderCalendar(); 
+        renderDayList(dateKey);
+      });
+      controls.appendChild(doneBtn);
+
+      if (it.source === 'sched'){
+        const edit = document.createElement('button'); edit.className='btn btn-sm btn-outline-primary'; edit.textContent='Editar';
+        edit.addEventListener('click', ()=> {
+        });
+        controls.appendChild(edit);
+
+        const del = document.createElement('button'); del.className='btn btn-sm btn-outline-danger'; del.textContent='Excluir';
+        del.addEventListener('click', ()=> { if (!confirm('Excluir este evento agendado?')) return; let arr = loadScheduled(); arr = arr.filter(e=> e.id !== it.id); saveScheduled(arr); renderCalendar(); renderDayList(dateKey); });
+        controls.appendChild(del);
+      }
+
+      left.appendChild(controls); 
+      row.appendChild(left);
+      
+      if (it.original && it.original.desc){ 
+        const desc = document.createElement('div'); 
+        desc.style.marginTop='6px'; 
+        desc.style.color='var(--muted)'; 
+        desc.textContent = it.original.desc; 
+        row.appendChild(desc); 
+      }
+      container.appendChild(row);
+    });
+  }
+}
+
+document.getElementById('filterRoom').addEventListener('change', ()=> renderCalendar());
+document.getElementById('searchInput').addEventListener('input', ()=> renderCalendar());
+document.getElementById('prev').addEventListener('click', ()=> { view = new Date(view.getFullYear(), view.getMonth()-1, 1); renderCalendar(); });
+document.getElementById('next').addEventListener('click', ()=> { view = new Date(view.getFullYear(), view.getMonth()+1, 1); renderCalendar(); });
+document.getElementById('today').addEventListener('click', ()=> { view = new Date(); renderCalendar(); });
+
+(function init(){ 
+  console.debug('init calendar'); 
+  populateRooms(); 
+  const d = new Date(); 
+  document.getElementById('miniMonthLabel').textContent = monthNames[d.getMonth()]; 
+  renderCalendar(); 
+})();
+</script>
+</body>
+</html>
