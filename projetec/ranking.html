@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Ranking Multiplayer & Premiação</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+:root{
+  --primary:#2a63fe; 
+  --muted:#6b7280; 
+  --card:#fff; 
+  --bg:#f4f7fb; 
+  --accent:#0b84ff; 
+  --done:#10b981;
+}
+body{background:var(--bg);font-family:Inter,system-ui,Arial,sans-serif;margin:0;padding:20px}
+.wrap{max-width:1200px;margin:0 auto}
+.top-card{
+  background:linear-gradient(90deg,var(--primary),#1a4fd8); 
+  color:white;
+  padding:18px;
+  border-radius:12px;
+  display:flex;
+  gap:16px;
+  align-items:center
+}
+.prize-img{width:120px;height:120px;border-radius:10px;background:white;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.prize-img img{width:100%;height:100%;object-fit:cover}
+.prize-info h2{margin:0;font-size:1.25rem}
+.countdown{margin-left:auto;text-align:right}
+.countdown .big{font-size:1.3rem;font-weight:700}
+.controls{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+.controls .small-muted,
+.countdown .small-muted,
+#prizeDesc {
+  color: white !important;
+  opacity: 0.95;
+}
+.grid{display:grid;grid-template-columns:1fr 380px;gap:16px;margin-top:18px}
+@media(max-width:980px){.grid{grid-template-columns:1fr}.countdown{text-align:left}}
+.card-panel{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 8px 30px rgba(20,30,60,0.06)}
+.player-row{display:flex;align-items:center;gap:12px;padding:10px;border-bottom:1px solid #f0f2f6}
+.player-row:last-child{border-bottom:0}
+.player-avatar{width:56px;height:56px;border-radius:10px;overflow:hidden;background:#fff;border:1px solid rgba(0,0,0,0.04)}
+.player-avatar img{width:100%;height:100%;object-fit:cover}
+.player-stats{margin-left:auto;text-align:right}
+.small-muted{color:var(--muted);font-size:0.9rem}
+.section-title{display:flex;justify-content:space-between;align-items:center}
+.unassigned-list{max-height:220px;overflow:auto;border:1px dashed rgba(0,0,0,0.06);padding:8px;border-radius:8px;background:#fbfdff}
+.hist-item{padding:8px;border-radius:8px;background:white;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(10,20,40,0.03)}
+.btn-smx{padding:4px 8px;font-size:0.78rem}
+.input-file{display:flex;gap:8px;align-items:center}
+.help{font-size:0.85rem;color:var(--muted)}
+
+
+.back-btn {
+  background: white;
+  color: #2a63fe;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+  
+.back-btn:hover {
+  background: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+  
+.back-btn:active {
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top-card">
+    <div class="prize-img" id="prizeBox">
+      <img id="prizeMainImg" src="/mnt/data/A_flat,_vector-style_digital_icon_of_a_calendar_is.png" alt="premio">
+    </div>
+
+    <div class="prize-info">
+      <div style="display:flex;gap:8px;align-items:center">
+        <div>
+          <h2 id="prizeTitle">Prêmio: —</h2>
+          <div id="prizeDesc" class="small-muted">Defina uma recompensa para o(s) vencedor(es).</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn btn-light btn-sm" id="editPrizeBtn">Editar premiação</button>
+        <label class="small-muted" style="align-self:center;margin-left:6px">Data final:</label>
+        <input type="date" id="endDate" class="form-control form-control-sm" style="width:180px">
+      </div>
+    </div>
+
+    <div class="countdown" id="countdownBox" aria-live="polite">
+      <div class="small-muted">Tempo restante</div>
+      <div class="big" id="cdText">—</div>
+      <div class="small-muted" id="endInfo"></div>
+    </div>
+  </div>
+
+  <div class="grid">
+
+    <div>
+      <div class="card-panel">
+        <div class="section-title">
+          <h4>🏆 Ranking Familiar</h4>
+          <div class="help">Crie jogadores, atribua conclusões e veja o ranking em tempo real.</div>
+        </div>
+
+        <div style="display:flex;gap:12px;margin-top:12px;align-items:flex-start">
+          <div style="flex:1">
+            <h6 class="small-muted">Pontuação por membro da família</h6>
+            <div id="playersList" style="margin-top:8px"></div>
+          </div>
+
+          <div style="width:300px">
+            <h6 class="small-muted">Itens não atribuídos</h6>
+            <div class="unassigned-list" id="unassignedList">
+            </div>
+            <div style="margin-top:8px" class="help">Atribua cada item a um membro para que os pontos sejam contabilizados automaticamente.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-panel" style="margin-top:14px">
+        <h5>Relatório Rápido</h5>
+        <div id="summary" style="margin-top:10px" class="small-muted"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card-panel">
+        <h5>Gerenciar Familiares</h5>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:10px">
+          <div class="player-avatar" id="newPlayerPreview"><img src="/mnt/data/A_flat,_vector-style_digital_icon_of_a_calendar_is.png" alt="avatar"></div>
+          <div style="flex:1">
+            <input id="playerName" class="form-control form-control-sm" placeholder="Nome do jogador">
+            <div style="display:flex;gap:6px;margin-top:6px">
+              <input type="file" id="playerFile" accept="image/*" class="form-control form-control-sm">
+              <button id="addPlayer" class="btn btn-primary btn-sm">Adicionar</button>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <h6 class="small-muted">Atribuir manualmente</h6>
+        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+          <select id="assignSelect" class="form-select form-select-sm">
+            <option value="">Escolha um familiar</option>
+          </select>
+          <button id="assignBtn" class="btn btn-sm btn-primary">Atribuir selecionados</button>
+        </div>
+
+        <hr>
+
+        <h6 class="small-muted">Premiação</h6>
+        <div style="margin-top:8px">
+          <div class="input-file">
+            <div class="file-preview" id="filePreview" style="width:72px;height:72px;border-radius:8px;overflow:hidden;border:1px dashed rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:center"><span class="small-muted">Sem imagem</span></div>
+            <div style="flex:1">
+              <input id="inputPrizeName" class="form-control form-control-sm" placeholder="Nome do prêmio">
+              <input id="inputPrizeDesc" class="form-control form-control-sm mt-2" placeholder="Descrição">
+              <input type="file" id="inputPrizeFile" accept="image/*" class="form-control form-control-sm mt-2">
+              <div style="display:flex;gap:6px;margin-top:8px">
+                <button id="savePrize" class="btn btn-primary btn-sm">Salvar</button>
+                <button id="resetPrize" class="btn btn-outline-danger btn-sm">Remover</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div style="display:flex;gap:8px">
+          <button id="resetCompetition" class="btn btn-outline-secondary btn-sm">Resetar data</button>
+          <button id="exportData" class="btn btn-outline-success btn-sm">Exportar CSV</button>
+          <button class="back-btn" onclick="window.history.back()">Voltar</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+const PLAYER_KEY = 'ranking_players';
+const PRIZE_KEY = 'ranking_prize';
+const DEADLINE_KEY = 'ranking_deadline';
+const ICON_FALLBACK = '/mnt/data/A_flat,_vector-style_digital_icon_of_a_calendar_is.png'; 
+
+
+const playersList = document.getElementById('playersList');
+const unassignedList = document.getElementById('unassignedList');
+const summaryDiv = document.getElementById('summary');
+const playerNameInput = document.getElementById('playerName');
+const playerFileInput = document.getElementById('playerFile');
+const addPlayerBtn = document.getElementById('addPlayer');
+const newPlayerPreview = document.getElementById('newPlayerPreview').querySelector('img');
+const assignSelect = document.getElementById('assignSelect');
+const assignBtn = document.getElementById('assignBtn');
+
+const filePreview = document.getElementById('filePreview');
+const inputPrizeName = document.getElementById('inputPrizeName');
+const inputPrizeDesc = document.getElementById('inputPrizeDesc');
+const inputPrizeFile = document.getElementById('inputPrizeFile');
+const savePrizeBtn = document.getElementById('savePrize');
+const resetPrizeBtn = document.getElementById('resetPrize');
+
+const prizeMainImg = document.getElementById('prizeMainImg');
+const prizeTitle = document.getElementById('prizeTitle');
+const prizeDesc = document.getElementById('prizeDesc');
+
+const endDateInput = document.getElementById('endDate');
+const cdText = document.getElementById('cdText');
+const endInfo = document.getElementById('endInfo');
+
+const exportBtn = document.getElementById('exportData');
+const resetCompBtn = document.getElementById('resetCompetition');
+
+
+const uid = (n=6)=> Math.random().toString(36).slice(2,2+n);
+const readJSON = (k, fallback)=> { try { return JSON.parse(localStorage.getItem(k) || 'null') || fallback; } catch(e){ return fallback; } }
+const writeJSON = (k,v)=> localStorage.setItem(k, JSON.stringify(v));
+
+function loadPlayers(){
+  return readJSON(PLAYER_KEY, []);
+}
+function savePlayers(list){ writeJSON(PLAYER_KEY, list); renderPlayers(); populateAssignSelect(); renderSummary(); renderRankingList(); }
+
+function renderPlayers(){
+  const arr = loadPlayers();
+  playersList.innerHTML = '';
+  if(arr.length===0){
+    playersList.innerHTML = '<div class="small-muted">Nenhum familiar adicionado.</div>';
+    return;
+  }
+  arr.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'player-row';
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="player-avatar"><img src="${p.img||ICON_FALLBACK}" alt="${p.name}"></div>
+        <div>
+          <div style="font-weight:700">${p.name}</div>
+          <div class="small-muted">ID: ${p.id}</div>
+        </div>
+      </div>
+      <div class="player-stats">
+        <div style="font-weight:700">${computePointsForPlayer(p.id)} pts</div>
+        <div class="small-muted">${countCompletionsForPlayer(p.id)} concl.</div>
+      </div>
+    `;
+    playersList.appendChild(div);
+  });
+}
+
+addPlayerBtn.addEventListener('click', ()=>{
+  const name = (playerNameInput.value || '').trim();
+  if(!name){ alert('Informe um nome para o familiar'); return; }
+  const file = playerFileInput.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const img = e.target.result;
+      const p = { id: uid(8), name, img };
+      const list = loadPlayers(); list.push(p); savePlayers(list);
+      playerNameInput.value=''; playerFileInput.value=''; newPlayerPreview.src = ICON_FALLBACK;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    const p = { id: uid(8), name, img: ICON_FALLBACK };
+    const list = loadPlayers(); list.push(p); savePlayers(list);
+    playerNameInput.value=''; playerFileInput.value='';
+  }
+});
+
+playerFileInput.addEventListener('change', (e)=>{
+  const f = e.target.files[0];
+  if(!f){ newPlayerPreview.src = ICON_FALLBACK; return; }
+  const r = new FileReader();
+  r.onload = function(ev){ newPlayerPreview.src = ev.target.result; }
+  r.readAsDataURL(f);
+});
+
+function populateAssignSelect(){
+  const arr = loadPlayers();
+  assignSelect.innerHTML = '<option value="">Escolha um familiar</option>';
+  arr.forEach(p=> assignSelect.innerHTML += `<option value="${p.id}">${p.name}</option>`);
+}
+
+function loadAllHistories(){
+  const perfil = readJSON('perfil', null);
+  if(!perfil || !perfil.rooms) return [];
+  const all = [];
+  perfil.rooms.forEach(r=>{
+    const hist = readJSON(`${r.key}_historico`, []);
+    hist.forEach((h, idx)=>{
+      all.push({
+        id: `${r.key}::${idx}::${btoa(h.nome+ (h.dataConclusao||''))}`, // stable-ish id
+        roomKey: r.key,
+        roomLabel: r.label,
+        nome: h.nome,
+        dataConclusao: h.dataConclusao,
+        pontos: Number(h.pontos) || 0,
+        playerId: h.playerId || null
+      });
+    });
+  });
+  return all;
+}
+
+function renderUnassigned(){
+  const all = loadAllHistories();
+  const un = all.filter(x=> !x.playerId);
+  unassignedList.innerHTML = '';
+  if(un.length===0){
+    unassignedList.innerHTML = '<div class="small-muted">Nenhum item sem atribuições.</div>';
+    return;
+  }
+  un.forEach(item=>{
+    const el = document.createElement('div');
+    el.className = 'hist-item';
+    el.innerHTML = `<div style="max-width:70%"><strong>${item.nome}</strong><div class="small-muted">${item.roomLabel} • ${item.dataConclusao}</div></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div class="small-muted" style="min-width:48px;text-align:right">${item.pontos} pts</div>
+        <button class="btn btn-sm btn-outline-primary btn-smx" data-id="${item.id}" onclick="assignOne(this.dataset.id)">Atribuir</button>
+      </div>`;
+    unassignedList.appendChild(el);
+  });
+}
+
+window.assignOne = function(id){
+  const playerId = assignSelect.value;
+  if(!playerId){ alert('Escolha alguém no campo lateral para atribuir.'); return; }
+  assignToPlayerById(id, playerId);
+};
+
+assignBtn.addEventListener('click', ()=>{
+  const sel = assignSelect.value;
+  if(!sel){ alert('Escolha um familiar para atribuir.'); return; }
+  const allUn = loadAllHistories().filter(x=> !x.playerId);
+  allUn.forEach(it => assignToPlayerById(it.id, sel));
+});
+
+
+function assignToPlayerById(generatedId, playerId){
+  const perfil = readJSON('perfil', null);
+  if(!perfil || !perfil.rooms) { alert('Perfil ausente.'); return; }
+  let changed = false;
+  perfil.rooms.forEach(r=>{
+    const key = `${r.key}_historico`;
+    const arr = readJSON(key, []);
+    for(let i=0;i<arr.length;i++){
+      const h = arr[i];
+      const gen = `${r.key}::${i}::${btoa(h.nome + (h.dataConclusao||''))}`;
+      if(gen === generatedId){
+        h.playerId = playerId;
+        arr[i] = h;
+        writeJSON(key, arr);
+        changed = true;
+        break;
+      }
+    }
+  });
+  if(changed){
+    renderUnassigned();
+    renderPlayers();
+    renderSummary();
+    renderRankingList();
+  } else {
+    console.warn('Não encontrou item para atribuir', generatedId);
+  }
+}
+
+function computePointsForPlayer(playerId){
+  const perfil = readJSON('perfil', null);
+  if(!perfil || !perfil.rooms) return 0;
+  let sum = 0;
+  perfil.rooms.forEach(r=>{
+    const hist = readJSON(`${r.key}_historico`, []);
+    hist.forEach(h=>{
+      if(h.playerId === playerId) sum += Number(h.pontos) || 0;
+    });
+  });
+  return sum;
+}
+function countCompletionsForPlayer(playerId){
+  const perfil = readJSON('perfil', null);
+  if(!perfil || !perfil.rooms) return 0;
+  let c = 0;
+  perfil.rooms.forEach(r=>{
+    const hist = readJSON(`${r.key}_historico`, []);
+    hist.forEach(h=>{ if(h.playerId === playerId) c++; });
+  });
+  return c;
+}
+
+function renderRankingList(){
+  const list = loadPlayers();
+  const enriched = list.map(p=> ({...p, pontos: computePointsForPlayer(p.id), concluidas: countCompletionsForPlayer(p.id)}));
+  enriched.sort((a,b)=> b.pontos - a.pontos);
+  playersList.innerHTML = '';
+  if(enriched.length===0){ playersList.innerHTML = '<div class="small-muted">Nenhum familiar adicionado.</div>'; return; }
+  enriched.forEach(p=>{
+    const div = document.createElement('div'); div.className='player-row';
+    div.innerHTML = `
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="player-avatar"><img src="${p.img||ICON_FALLBACK}" alt="${p.name}"></div>
+        <div>
+          <div style="font-weight:700">${p.name}</div>
+          <div class="small-muted">ID: ${p.id}</div>
+        </div>
+      </div>
+      <div class="player-stats">
+        <div style="font-weight:700">${p.pontos} pts</div>
+        <div class="small-muted">${p.concluidas} concl.</div>
+      </div>
+    `;
+    playersList.appendChild(div);
+  });
+}
+
+function renderSummary(){
+  const perfil = readJSON('perfil', null);
+  if(!perfil || !perfil.rooms){ summaryDiv.textContent = 'Sem dados do perfil.'; return; }
+  let totalPts = 0, totalConcl = 0, totalUn = 0;
+  perfil.rooms.forEach(r=>{
+    const hist = readJSON(`${r.key}_historico`, []);
+    hist.forEach(h=>{
+      if(h.playerId) { totalPts += Number(h.pontos)||0; totalConcl++; } else totalUn++;
+    });
+  });
+  summaryDiv.textContent = `Total pontos atribuídos: ${totalPts} • Conclusões atribuídas: ${totalConcl} • Não atribuídas: ${totalUn}`;
+}
+
+function loadPrize(){
+  const p = readJSON(PRIZE_KEY, null);
+  if(p){
+    prizeMainImg.src = p.img || ICON_FALLBACK;
+    prizeTitle.textContent = p.name || 'Prêmio';
+    prizeDesc.textContent = p.desc || '';
+    filePreview.innerHTML = p.img ? `<img src="${p.img}">` : '<span class="small-muted">Sem imagem</span>';
+    inputPrizeName.value = p.name || '';
+    inputPrizeDesc.value = p.desc || '';
+  } else {
+    prizeMainImg.src = ICON_FALLBACK;
+    prizeTitle.textContent = 'Prêmio: —';
+    prizeDesc.textContent = 'Defina uma recompensa para o vencedor.';
+    filePreview.innerHTML = '<span class="small-muted">Sem imagem</span>';
+    inputPrizeName.value = '';
+    inputPrizeDesc.value = '';
+  }
+}
+function savePrize(){
+  const name = inputPrizeName.value.trim();
+  const desc = inputPrizeDesc.value.trim();
+  const f = inputPrizeFile.files[0];
+  if(f){
+    const r = new FileReader();
+    r.onload = (e)=> { writeJSON(PRIZE_KEY, {name, desc, img: e.target.result}); loadPrize(); alert('Premiação salva.'); };
+    r.readAsDataURL(f);
+  } else {
+    writeJSON(PRIZE_KEY, {name, desc, img: null}); loadPrize(); alert('Premiação salva.');
+  }
+}
+savePrizeBtn.addEventListener('click', savePrize);
+resetPrizeBtn.addEventListener('click', ()=>{ if(confirm('Remover premiação?')){ localStorage.removeItem(PRIZE_KEY); loadPrize(); } });
+
+let countdownTimer = null;
+function loadDeadline(){ const d = localStorage.getItem(DEADLINE_KEY) || ''; endDateInput.value = d; updateCountdown(); }
+endDateInput.addEventListener('change', ()=>{ const v = endDateInput.value; if(v) localStorage.setItem(DEADLINE_KEY, v); else localStorage.removeItem(DEADLINE_KEY); updateCountdown(); });
+
+function updateCountdown(){
+  const v = localStorage.getItem(DEADLINE_KEY);
+  if(!v){ cdText.textContent='—'; endInfo.textContent='Sem data definida'; if(countdownTimer){ clearInterval(countdownTimer); countdownTimer=null;} return; }
+  const end = new Date(v + 'T23:59:59');
+  function tick(){
+    const now = new Date(); const diff = end - now;
+    if(diff <= 0){ cdText.textContent='Competição encerrada'; endInfo.textContent=`Data final: ${v}`; clearInterval(countdownTimer); countdownTimer=null; return; }
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const mins = Math.floor((diff%(1000*60*60))/(1000*60));
+    const secs = Math.floor((diff%(1000*60))/1000);
+    cdText.textContent = `${days}d ${String(hours).padStart(2,'0')}h ${String(mins).padStart(2,'0')}m ${String(secs).padStart(2,'0')}s`;
+    endInfo.textContent = `Data final: ${v}`;
+  }
+  if(countdownTimer) clearInterval(countdownTimer);
+  tick(); countdownTimer = setInterval(tick, 1000);
+}
+
+function exportCSV(){
+  const players = loadPlayers();
+  const rows = [['pos','nome','pontos','concluidas']];
+  const enriched = players.map(p=> ({...p, pontos: computePointsForPlayer(p.id), concluidas: countCompletionsForPlayer(p.id)}));
+  enriched.sort((a,b)=> b.pontos - a.pontos);
+  enriched.forEach((p, idx)=> rows.push([idx+1, p.name, p.pontos, p.concluidas]));
+  const csv = rows.map(r=> r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'ranking.csv'; a.click(); URL.revokeObjectURL(url);
+}
+exportBtn.addEventListener('click', exportCSV);
+
+resetCompBtn.addEventListener('click', ()=>{ if(confirm('Remover data final?')){ localStorage.removeItem(DEADLINE_KEY); loadDeadline(); } });
+
+function refreshAll(){
+  loadPrize();
+  loadDeadline();
+  renderUnassigned();
+  renderPlayers();
+  populateAssignSelect();
+  renderSummary();
+  renderRankingList();
+}
+loadPrize();
+loadDeadline();
+refreshAll();
+setInterval(refreshAll, 3000);
+
+</script>
+</body>
+</html>
