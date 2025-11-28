@@ -4,30 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Criar Tarefa</title>
-
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-  <style>
-    body { font-family: Arial, sans-serif; }
-    .bg-primary { background: dodgerblue !important; }
-
-    .campo { margin-top: 15px; }
-  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
 <body>
-
   <div class="bg-primary text-white p-3 d-flex justify-content-between align-items-center">
-    <h1 class="m-0">Criar Tarefa</h1>
+    <h1>Criar Tarefa</h1>
     <a href="home.html" class="btn btn-light">Voltar</a>
   </div>
 
   <div class="container mt-3">
-
     <form id="tarefaForm">
-
-      <!-- CÔMODO -->
       <div class="mb-3">
         <label class="form-label">Para qual cômodo será a tarefa?</label>
         <select class="form-select" id="roomSelect">
@@ -35,17 +23,8 @@
         </select>
       </div>
 
-      <!-- PRIMEIRO: TAREFAS PRÉ-DEFINIDAS -->
-      <div class="mb-3">
-        <label class="form-label">Selecionar tarefa pré-definida:</label>
-        <select class="form-select" id="taskSelect" disabled>
-          <option value="">Selecione um cômodo primeiro</option>
-        </select>
-      </div>
-
-      <!-- DEPOIS: DIGITAR TAREFA -->
       <div class="mb-3 campo">
-        <label for="nome-tarefa">Ou digite sua própria tarefa:</label>
+        <label for="nome-tarefa">Nome da Tarefa:</label>
         <input
           id="nome-tarefa"
           type="text"
@@ -55,144 +34,344 @@
         />
       </div>
 
-      <!-- DATA -->
       <div class="mb-3">
-        <label class="form-label">Data da tarefa:</label>
-        <input id="data-tarefa" type="date" class="form-control" required />
-      </div>
-
-      <!-- PARTICIPANTE -->
-      <div class="mb-3">
-        <label class="form-label">Quem fará a tarefa?</label>
-        <select class="form-select" id="participantSelect" required>
-          <option value="">Selecione…</option>
+        <label class="form-label">Selecionar tarefa pré-definida (opcional):</label>
+        <select class="form-select" id="taskSelect" disabled>
+          <option value="">Selecione um cômodo primeiro</option>
         </select>
       </div>
 
-      <!-- BOTÃO -->
-      <div class="text-center mt-4">
-        <button type="submit" class="btn btn-primary btn-lg">Cadastrar Tarefa</button>
+      
+      <div class="mb-3">
+        <label for="pontosSelect" class="form-label">Pontuação da Tarefa (1 a 10):</label>
+        <select class="form-select" id="pontosSelect" required>
+          <option value="5" selected>5 Pontos (Padrão)</option>
+          <script>
+           
+            for (let i = 1; i <= 10; i++) {
+              if (i !== 5) document.write(`<option value="${i}">${i} Pontos</option>`);
+            }
+          </script>
+        </select>
+      </div>
+      <div class="mb-3 form-check">
+        <input class="form-check-input" type="checkbox" id="recorrenteCheck">
+        <label class="form-check-label" for="recorrenteCheck">
+          Tarefa Recorrente?
+        </label>
       </div>
 
-    </form>
+      <div id="recorrenciaCampos" style="display: none;" class="p-3 border rounded mb-3">
+        <h5 class="mb-3">Configurar Recorrência</h5>
 
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="horaSelect" class="form-label">Hora:</label>
+            <select class="form-select" id="horaSelect">
+              </select>
+          </div>
+          <div class="col-md-6">
+            <label for="minutoSelect" class="form-label">Minuto:</label>
+            <select class="form-select" id="minutoSelect">
+              </select>
+          </div>
+        </div>
+
+        <label class="form-label">Dias da Semana:</label>
+        <div id="diasDaSemana" class="d-flex flex-wrap gap-2">
+          </div>
+        <div class="form-text">Clique para selecionar/desselecionar os dias.</div>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="criarTarefa()">Criar Tarefa</button>
+    </form>
   </div>
 
   <script>
-    const predefinedTasks = {
-      cozinha: ["Lavar louça", "Tirar lixo", "Limpar fogão", "Organizar geladeira"],
-      quarto: ["Arrumar cama", "Organizar guarda-roupa", "Varrer o chão"],
-      banheiro: ["Lavar pia", "Lavar vaso", "Trocar toalhas", "Lavar box"],
-      salaestar: ["Limpar TV", "Organizar sofá", "Tirar poeira"],
-      areadeservico: ["Lavar roupas", "Estender roupas", "Recolher roupas"],
-      garagem: ["Varrer chão", "Organizar ferramentas"],
-      varanda: ["Varrer", "Regar plantas"],
-      jardim: ["Podar plantas", "Regar jardim", "Tirar folhas secas"]
+    const tasksByType = {
+      cozinha: [
+        "Lavar a louça", "Secar e guardar a louça", "Limpar o fogão",
+        "Limpar a geladeira (parte externa)", "Limpar a geladeira (parte interna)",
+        "Jogar o lixo fora", "Tirar o lixo reciclável", "Limpar armários por dentro",
+        "Limpar armários por fora", "Varrer o chão", "Passar pano no chão", "Limpar a pia",
+        "Organizar as compras na despensa", "Descongelar e limpar o freezer",
+        "Limpar micro-ondas por dentro/fora", "Organizar gavetas"
+      ],
+      quarto: [
+        "Arrumar a cama", "Trocar a roupa de cama", "Guardar roupas limpas", "Dobrar roupas",
+        "Separar roupas sujas", "Limpar móveis (poeira)", "Organizar armário",
+        "Limpar ventilador/ar-condicionado", "Varrer o chão", "Passar pano no chão",
+        "Organizar gavetas", "Limpar espelhos", "Aspirar o colchão", "Virar o colchão",
+        "Recolher lixo do quarto"
+      ],
+      banheiro: [
+        "Limpar o vaso sanitário", "Limpar o box", "Limpar os azulejos", "Limpar o espelho",
+        "Limpar a pia", "Limpar o chão", "Trocar toalhas", "Trocar papel higiênico",
+        "Lavar tapetes", "Jogar lixo fora", "Organizar produtos de higiene",
+        "Lavar o ralo", "Tirar cabelos do ralo"
+      ],
+      salaestar: [
+        "Tirar o pó dos móveis e superfícies",
+        "Aspirar ou varrer o chão",
+        "Passar pano no chão",
+        "Organizar almofadas, mantas e objetos",
+        "Limpar janelas e vidros",
+        "Limpar aparelhos eletrônicos (TV, controles, etc.)",
+        "Lavar cortinas ou limpar persianas",
+        "Limpar ventiladores, lustres ou luminárias",
+        "Desinfetar controles remotos e maçanetas",
+        "Retirar lixo ou papéis acumulados"
+      ],
+      areadeservico: [
+        "Lavar e estender roupas",
+        "Passar roupas",
+        "Dobrar e guardar roupas",
+        "Limpar o tanque",
+        "Limpar a máquina de lavar",
+        "Organizar produtos de limpeza",
+        "Varrer e passar pano no chão",
+        "Tirar o pó de prateleiras e armários",
+        "Esvaziar e limpar cestos de roupa suja",
+        "Separar roupas para doação ou descarte"
+      ],
+      garagem: [
+        "Varrer o chão",
+        "Remover teias de aranha",
+        "Organizar ferramentas e objetos",
+        "Lavar o chão (se necessário)",
+        "Limpar portas e janelas",
+        "Lavar o carro",
+        "Jogar fora objetos quebrados ou inúteis",
+        "Separar itens para doação ou reciclagem",
+        "Revisar prazos de validade de produtos armazenados",
+        "Verificar iluminação (trocar lâmpadas queimadas)"
+      ],
+      varanda: [
+        "Varrer e passar pano no chão",
+        "Regar plantas",
+        "Podar plantas",
+        "Limpar vasos e suportes",
+        "Limpar parapeitos e grades",
+        "Tirar pó de móveis e objetos decorativos",
+        "Lavar tapetes ou capachos",
+        "Limpar janelas e vidros",
+        "Recolher folhas secas",
+        "Organizar cadeiras, mesas e itens de lazer"
+      ],
+      jardim: [
+        "Cortar a grama",
+        "Podar arbustos e árvores",
+        "Regar as plantas",
+        "Remover ervas daninhas",
+        "Adubar o solo",
+        "Plantar novas mudas ou sementes",
+        "Recolher folhas secas",
+        "Limpar ferramentas de jardinagem",
+        "Organizar vasos e canteiros",
+        "Verificar e ajustar sistemas de irrigação"
+      ]
     };
 
-    const roomSelect = document.getElementById("roomSelect");
-    const taskSelect = document.getElementById("taskSelect");
-    const inputNomeTarefa = document.getElementById("nome-tarefa");
-
-    const participantSelect = document.getElementById("participantSelect");
-
-    function carregarDados() {
-      const perfil = JSON.parse(localStorage.getItem("perfil") || "{}");
-
-      // CÔMODOS
-      if (perfil.rooms) {
-        perfil.rooms.forEach((r, i) => {
-          const opt = document.createElement("option");
-          opt.value = r.label;
-          opt.textContent = r.label;
-          roomSelect.appendChild(opt);
-        });
-      }
-
-      // PARTICIPANTES
-      if (perfil.participants) {
-        perfil.participants.forEach(p => {
-          const opt = document.createElement("option");
-          opt.value = p.name;
-          opt.textContent = p.name;
-          participantSelect.appendChild(opt);
-        });
-      }
+    const perfil = JSON.parse(localStorage.getItem('perfil'));
+    if (!perfil) {
+   
+    if (!perfil || !perfil.rooms || perfil.rooms.length === 0) {
+      alert('Você precisa cadastrar e salvar pelo menos um cômodo na página "Perfil" antes de criar tarefas.');
+      window.location.href = 'profile.html';
     }
 
-    roomSelect.addEventListener("change", () => {
-      const roomName = roomSelect.value;
+    const roomSelect = document.getElementById('roomSelect');
+    const taskSelect = document.getElementById('taskSelect');
+    const nomeTarefaInput = document.getElementById('nome-tarefa'); 
+    const pontosSelect = document.getElementById('pontosSelect'); // NOVO: Elemento de pontos
 
-      taskSelect.innerHTML = "";
+    const recorrenteCheck = document.getElementById('recorrenteCheck');
+    const recorrenciaCampos = document.getElementById('recorrenciaCampos');
+    const horaSelect = document.getElementById('horaSelect');
+    const minutoSelect = document.getElementById('minutoSelect');
+    const diasDaSemanaDiv = document.getElementById('diasDaSemana');
+    const diasSemana = [
+      { nome: 'Dom', valor: 0 }, { nome: 'Seg', valor: 1 }, { nome: 'Ter', valor: 2 }, 
+      { nome: 'Qua', valor: 3 }, { nome: 'Qui', valor: 4 }, { nome: 'Sex', valor: 5 }, 
+      { nome: 'Sáb', valor: 6 }
+    ];
 
-      if (!roomName) {
-        taskSelect.disabled = true;
-        taskSelect.innerHTML = "<option>Selecione um cômodo primeiro</option>";
-        return;
+    function gerarOpcoesTempo() {
+      for (let i = 0; i < 24; i++) {
+        const hora = String(i).padStart(2, '0');
+        const opt = document.createElement('option');
+        opt.value = hora;
+        opt.textContent = hora;
+        horaSelect.appendChild(opt);
       }
+      for (let i = 0; i < 60; i += 5) {
+        const minuto = String(i).padStart(2, '0');
+        const opt = document.createElement('option');
+        opt.value = minuto;
+        opt.textContent = minuto;
+        minutoSelect.appendChild(opt);
+      }
+      horaSelect.value = "10";
+      minutoSelect.value = "00";
+    }
 
-      taskSelect.disabled = false;
+    function gerarBotoesDias() {
+      diasSemana.forEach(dia => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.classList.add('btn', 'btn-outline-secondary', 'btn-sm');
+        btn.textContent = dia.nome;
+        btn.dataset.diaValor = dia.valor;
+        btn.dataset.selecionado = 'false';
 
-      const lower = roomName.toLowerCase().replaceAll(" ", "");
-      const tasks = predefinedTasks[lower] || [];
-
-      taskSelect.innerHTML = '<option value="">Selecione…</option>';
-
-      tasks.forEach(t => {
-        const opt = document.createElement("option");
-        opt.value = t;
-        opt.textContent = t;
-        taskSelect.appendChild(opt);
+        btn.addEventListener('click', () => {
+          if (btn.dataset.selecionado === 'false') {
+            btn.dataset.selecionado = 'true';
+            btn.classList.remove('btn-outline-secondary');
+            btn.classList.add('btn-primary');
+          } else {
+            btn.dataset.selecionado = 'false';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-secondary');
+          }
+        });
+        diasDaSemanaDiv.appendChild(btn);
       });
+    }
+
+    perfil.rooms.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.key;
+      opt.dataset.type = r.type;
+      opt.textContent = r.label;
+      roomSelect.appendChild(opt);
     });
 
-    // Quando escolhe pré-definida → limpa campo digitado
-    taskSelect.addEventListener("change", () => {
-      if (taskSelect.value) {
-        inputNomeTarefa.value = "";
+    roomSelect.addEventListener('change', () => {
+      const selOpt = roomSelect.selectedOptions[0];
+      if (!selOpt) {
+        taskSelect.innerHTML = '<option value="">Selecione um cômodo primeiro</option>';
+        taskSelect.disabled = true;
+        return;
+      }
+      const type = selOpt.dataset.type;
+      taskSelect.innerHTML = '<option value="">Selecione a tarefa</option>';
+
+      if(tasksByType[type]){
+        tasksByType[type].forEach(task => {
+          const o = document.createElement('option');
+          o.value = task;
+          o.textContent = task;
+          taskSelect.appendChild(o);
+        });
+        taskSelect.disabled = false;
+      } else {
+        taskSelect.innerHTML = '<option value="">Nenhuma tarefa disponível</option>';
+        taskSelect.disabled = true;
       }
     });
 
-    // Quando digita → remove seleção pré-definida
-    inputNomeTarefa.addEventListener("input", () => {
-      if (inputNomeTarefa.value.trim() !== "") {
-        taskSelect.value = "";
+    nomeTarefaInput.addEventListener('input', () => {
+      if (nomeTarefaInput.value.trim() !== '') {
+        taskSelect.value = '';
       }
     });
 
-    document.getElementById("tarefaForm").addEventListener("submit", (e) => {
-      e.preventDefault();
+    taskSelect.addEventListener('change', () => {
+      if (taskSelect.value !== '') {
+        nomeTarefaInput.value = '';
+      }
+    });
 
-      const room = roomSelect.value;
-      const predefined = taskSelect.value;
-      const typed = inputNomeTarefa.value.trim();
-      const date = document.getElementById("data-tarefa").value;
-      const participant = participantSelect.value;
+    recorrenteCheck.addEventListener('change', () => {
+      recorrenciaCampos.style.display = recorrenteCheck.checked ? 'block' : 'none';
+    });
 
-      if (!predefined && !typed) {
-        alert("Escolha uma tarefa pré-definida ou digite uma manualmente.");
+    function criarTarefa() {
+      const roomKey = roomSelect.value;
+      const tarefaSelecionada = taskSelect.value.trim();
+      const tarefaDigitada = nomeTarefaInput.value.trim();
+      const isRecorrente = recorrenteCheck.checked; 
+      const pontos = parseInt(pontosSelect.value);
+
+      if (!roomKey) {
+        alert('Escolha um cômodo.');
         return;
       }
 
-      const tarefa = {
-        room,
-        nome: predefined || typed,
-        date,
-        participant,
-        done: false,
-        id: Date.now()
+      if (tarefaDigitada && tarefaSelecionada) {
+        alert('Por favor, preencha apenas um dos campos: ou digite uma tarefa, ou selecione uma tarefa pré-definida.');
+        return;
+      }
+
+      if (!tarefaDigitada && !tarefaSelecionada) {
+        alert('Digite um nome de tarefa ou selecione uma tarefa pré-definida.');
+        return;
+      }
+
+      const nomeTarefa = tarefaDigitada || tarefaSelecionada;
+
+
+      const novaTarefa = {
+        nome: nomeTarefa,
+        data: new Date().toISOString(), 
+        isRecorrente: isRecorrente
+        data: new Date().toISOString(),
+        isRecorrente: isRecorrente,
+        pontos: pontos 
       };
 
-      const lista = JSON.parse(localStorage.getItem("tarefas") || "[]");
-      lista.push(tarefa);
-      localStorage.setItem("tarefas", JSON.stringify(lista));
+      if (isRecorrente) {
+        const hora = horaSelect.value;
+        const minuto = minutoSelect.value;
 
-      alert("Tarefa cadastrada!");
-      window.location.href = "home.html";
-    });
+        const diasSelecionados = Array.from(diasDaSemanaDiv.querySelectorAll('button[data-selecionado="true"]'))
+                                       .map(btn => parseInt(btn.dataset.diaValor)); 
 
-    window.onload = carregarDados;
+        if (diasSelecionados.length === 0) {
+            alert('Por favor, selecione pelo menos um dia da semana para a tarefa recorrente.');
+            return;
+        }
+
+        novaTarefa.recorrencia = {
+          hora: hora,
+          minuto: minuto,
+          dias: diasSelecionados
+        };
+      }
+
+
+      const lista = JSON.parse(localStorage.getItem(`${roomKey}_tarefas`) || '[]');
+      lista.push(novaTarefa);
+      localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(lista));
+
+      alert(`Tarefa "${nomeTarefa}" criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
+      alert(`Tarefa "${nomeTarefa}" (${pontos} pts) criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
+
+      document.getElementById('tarefaForm').reset();
+      taskSelect.disabled = true;
+
+     
+      recorrenciaCampos.style.display = 'none';
+      diasDaSemanaDiv.querySelectorAll('button').forEach(btn => {
+          btn.dataset.selecionado = 'false';
+          btn.classList.remove('btn-primary');
+          btn.classList.add('btn-outline-secondary');
+      });
+      pontosSelect.value = "5"; 
+    }
+
+    gerarOpcoesTempo();
+    gerarBotoesDias();
   </script>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .bg-primary {
+      background-color: dodgerblue !important;
+    }
+  </style>
 </body>
+
 </html>
