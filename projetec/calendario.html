@@ -205,7 +205,7 @@ function generateRecurrencesForMonth(year, month){
   return out;
 }
 
-// NOVO CÓDIGO UNIFICADO (Substitui extractGeneratedTasksForMonth e extractSingleTasksForMonth)
+
 function extractNonRecurrentTasksForMonth(year, month) {
   const out = [];
   const roomTasks = loadRoomTasks();
@@ -214,7 +214,7 @@ function extractNonRecurrentTasksForMonth(year, month) {
     const t = entry.task;
     if (!t) return;
     
-    // Procura por tarefas NÃO recorrentes com o campo 'data' (esperando ISO string)
+   
     if (!t.isRecorrente && t.data) {
       const parsed = new Date(t.data); 
       
@@ -228,7 +228,7 @@ function extractNonRecurrentTasksForMonth(year, month) {
           taskIndex: entry.taskIndex,
           title: t.nome,
           dateKey: dateKey,
-          start: parsed.toTimeString().slice(0, 5), // Hora da criação
+          start: parsed.toTimeString().slice(0, 5), 
           original: t,
           pontos: t.pontos
         });
@@ -245,11 +245,10 @@ function scheduledEventsForMonth(year, month){
   }).map(ev=>Object.assign({source:'sched'}, ev));
 }
 
-// CORREÇÃO AQUI: Chamando apenas a nova função de extração
 function buildOccurrencesForMonth(year, month, filterRoomKey='__all', searchText=''){
   const occ=[];
   occ.push(...generateRecurrencesForMonth(year, month));
-  occ.push(...extractNonRecurrentTasksForMonth(year, month)); // Chamada para tarefas não-recorrentes
+  occ.push(...extractNonRecurrentTasksForMonth(year, month)); 
   occ.push(...scheduledEventsForMonth(year, month));
   
   const filtered = occ.filter(o=>{
@@ -293,7 +292,7 @@ function renderCalendar(){
     list.slice(0,3).forEach(it=>{
       const span = document.createElement('span'); span.className='task-pill';
       if (it.source === 'sched') span.classList.add('scheduled'); 
-      // Altera a condição para incluir o novo source: 'singleTask' e 'roomTask' são agora 'nonRecurrentTask'
+     
       else if (it.source === 'nonRecurrentTask' || it.source === 'roomTask') span.classList.add('room');
       
       const key = occKey(it.source==='sched' ? 'sched' : 'roomTask', (it.source==='sched'?it.id:(it.roomKey+'_'+it.taskIndex)), dateKey);
@@ -332,7 +331,6 @@ function renderDayList(dateKey, focusItem){
   container.innerHTML = '';
   const year = parseInt(dateKey.slice(0,4)), month = parseInt(dateKey.slice(5,7))-1;
   
-  // CORREÇÃO: Passar o filtro de pesquisa vazio para obter todos os eventos do dia
   const occMap = buildOccurrencesForMonth(year, month);
   
   const items = occMap[dateKey] ? [...occMap[dateKey]] : [];
