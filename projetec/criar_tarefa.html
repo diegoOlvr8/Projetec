@@ -40,7 +40,19 @@
           <option value="">Selecione um cômodo primeiro</option>
         </select>
       </div>
-
+      
+      <div class="mb-3">
+        <label for="pontosSelect" class="form-label">Pontuação da Tarefa (1 a 10):</label>
+        <select class="form-select" id="pontosSelect" required>
+          <option value="5" selected>5 Pontos (Padrão)</option>
+          <script>
+           
+            for (let i = 1; i <= 10; i++) {
+              if (i !== 5) document.write(`<option value="${i}">${i} Pontos</option>`);
+            }
+          </script>
+        </select>
+      </div>
       <div class="mb-3 form-check">
         <input class="form-check-input" type="checkbox" id="recorrenteCheck">
         <label class="form-check-label" for="recorrenteCheck">
@@ -159,13 +171,16 @@
     };
 
     const perfil = JSON.parse(localStorage.getItem('perfil'));
-    if (!perfil) {
+   
+    if (!perfil || !perfil.rooms || perfil.rooms.length === 0) {
+      alert('Você precisa cadastrar e salvar pelo menos um cômodo na página "Perfil" antes de criar tarefas.');
       window.location.href = 'profile.html';
     }
 
     const roomSelect = document.getElementById('roomSelect');
     const taskSelect = document.getElementById('taskSelect');
     const nomeTarefaInput = document.getElementById('nome-tarefa'); 
+    const pontosSelect = document.getElementById('pontosSelect'); // NOVO: Elemento de pontos
     
     const recorrenteCheck = document.getElementById('recorrenteCheck');
     const recorrenciaCampos = document.getElementById('recorrenciaCampos');
@@ -274,6 +289,7 @@
       const tarefaSelecionada = taskSelect.value.trim();
       const tarefaDigitada = nomeTarefaInput.value.trim();
       const isRecorrente = recorrenteCheck.checked; 
+      const pontos = parseInt(pontosSelect.value);
 
       if (!roomKey) {
         alert('Escolha um cômodo.');
@@ -295,8 +311,9 @@
       
       const novaTarefa = {
         nome: nomeTarefa,
-        data: new Date().toISOString(), 
-        isRecorrente: isRecorrente
+        data: new Date().toISOString(),
+        isRecorrente: isRecorrente,
+        pontos: pontos 
       };
       
       if (isRecorrente) {
@@ -323,17 +340,19 @@
       lista.push(novaTarefa);
       localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(lista));
 
-      alert(`Tarefa "${nomeTarefa}" criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
+      alert(`Tarefa "${nomeTarefa}" (${pontos} pts) criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
 
       document.getElementById('tarefaForm').reset();
       taskSelect.disabled = true;
       
+     
       recorrenciaCampos.style.display = 'none';
       diasDaSemanaDiv.querySelectorAll('button').forEach(btn => {
           btn.dataset.selecionado = 'false';
           btn.classList.remove('btn-primary');
           btn.classList.add('btn-outline-secondary');
       });
+      pontosSelect.value = "5"; 
     }
     
     gerarOpcoesTempo();
@@ -349,5 +368,4 @@
     }
   </style>
 </body>
-
 </html>
