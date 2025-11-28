@@ -40,7 +40,6 @@
           <option value="">Selecione um cômodo primeiro</option>
         </select>
       </div>
-
       
       <div class="mb-3">
         <label for="pontosSelect" class="form-label">Pontuação da Tarefa (1 a 10):</label>
@@ -172,7 +171,6 @@
     };
 
     const perfil = JSON.parse(localStorage.getItem('perfil'));
-    if (!perfil) {
    
     if (!perfil || !perfil.rooms || perfil.rooms.length === 0) {
       alert('Você precisa cadastrar e salvar pelo menos um cômodo na página "Perfil" antes de criar tarefas.');
@@ -182,8 +180,8 @@
     const roomSelect = document.getElementById('roomSelect');
     const taskSelect = document.getElementById('taskSelect');
     const nomeTarefaInput = document.getElementById('nome-tarefa'); 
-    const pontosSelect = document.getElementById('pontosSelect'); // NOVO: Elemento de pontos
-
+    const pontosSelect = document.getElementById('pontosSelect'); 
+    
     const recorrenteCheck = document.getElementById('recorrenteCheck');
     const recorrenciaCampos = document.getElementById('recorrenciaCampos');
     const horaSelect = document.getElementById('horaSelect');
@@ -194,7 +192,7 @@
       { nome: 'Qua', valor: 3 }, { nome: 'Qui', valor: 4 }, { nome: 'Sex', valor: 5 }, 
       { nome: 'Sáb', valor: 6 }
     ];
-
+    
     function gerarOpcoesTempo() {
       for (let i = 0; i < 24; i++) {
         const hora = String(i).padStart(2, '0');
@@ -310,20 +308,18 @@
 
       const nomeTarefa = tarefaDigitada || tarefaSelecionada;
 
-
+      
       const novaTarefa = {
         nome: nomeTarefa,
-        data: new Date().toISOString(), 
-        isRecorrente: isRecorrente
         data: new Date().toISOString(),
         isRecorrente: isRecorrente,
         pontos: pontos 
       };
-
+      
       if (isRecorrente) {
         const hora = horaSelect.value;
         const minuto = minutoSelect.value;
-
+        
         const diasSelecionados = Array.from(diasDaSemanaDiv.querySelectorAll('button[data-selecionado="true"]'))
                                        .map(btn => parseInt(btn.dataset.diaValor)); 
 
@@ -344,12 +340,11 @@
       lista.push(novaTarefa);
       localStorage.setItem(`${roomKey}_tarefas`, JSON.stringify(lista));
 
-      alert(`Tarefa "${nomeTarefa}" criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
       alert(`Tarefa "${nomeTarefa}" (${pontos} pts) criada para ${roomSelect.selectedOptions[0].textContent}.${isRecorrente ? ' (Recorrente)' : ''}`);
 
       document.getElementById('tarefaForm').reset();
       taskSelect.disabled = true;
-
+      
      
       recorrenciaCampos.style.display = 'none';
       diasDaSemanaDiv.querySelectorAll('button').forEach(btn => {
@@ -359,7 +354,7 @@
       });
       pontosSelect.value = "5"; 
     }
-
+    
     gerarOpcoesTempo();
     gerarBotoesDias();
   </script>
@@ -373,5 +368,4 @@
     }
   </style>
 </body>
-
 </html>
