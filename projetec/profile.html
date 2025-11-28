@@ -43,19 +43,10 @@
       </div>
 
       <div class="col-md-6">
-        <label class="form-label">Foto (opcional):</label>
-        <input type="file" id="userPhoto" accept="image/*" class="form-control" />
         <label class="form-label">Foto de Perfil (Opcional):</label>
         <input type="file" id="userPhoto" class="form-control" accept="image/*" />
       </div>
 
-      <hr class="mt-4" />
-
-      <h4>Selecione cômodos</h4>
-
-      <div id="roomPicker" class="col-12"></div>
-
-      <button type="button" id="addRoomBtn" class="btn btn-secondary mt-2">+ Adicionar cômodo</button>
       <div class="col-12 mt-4">
         <h4>Cômodos da Casa</h4>
         <div id="roomPicker">
@@ -65,8 +56,6 @@
         </button>
       </div>
 
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary mt-3">Salvar perfil</button>
       <div class="col-12 mt-4">
         <h4>Participantes da Competição</h4>
         <p class="text-muted small">Adicione os nomes dos membros da casa para o sistema de pontuação.</p>
@@ -96,43 +85,6 @@
       varanda: "Varanda",
       jardim: "Jardim",
     };
-
-    const roomPickerDiv = document.getElementById("roomPicker");
-    const addRoomBtn = document.getElementById("addRoomBtn");
-    let roomIdx = 0;
-    let dragSrcEl = null;
-
-    function addRoomSelector(saved) {
-      roomIdx++;
-      const wrapper = document.createElement("div");
-      wrapper.className = "input-group mb-3 d-flex align-items-center";
-      wrapper.dataset.index = roomIdx;
-      wrapper.setAttribute("draggable", "true");
-
-      wrapper.innerHTML = `
-        <div class="drag-handle" title="Arraste para reordenar" aria-label="Reordenar cômodo">≡</div>
-
-        <select class="form-select room-type" style="width: 150px;">
-          ${Object.entries(roomTypes)
-            .map(
-              ([k, v]) =>
-                `<option value="${k}" ${
-                  saved && saved.type === k ? "selected" : ""
-                }>${v}</option>`
-            )
-            .join("")}
-        </select>
-
-        <input type="text" class="form-control room-label mx-2"
-          placeholder="Nome do cômodo"
-          value="${saved ? saved.label : ""}" />
-
-        <input type="file" accept="image/*" class="form-control room-photo"
-          style="max-width:200px;" />
-
-        ${saved && saved.photo ? `<small class="text-success ms-2">Foto já carregada ✔</small>` : ""}
-
-        <button class="btn btn-danger remove-room ms-2" type="button">&times;</button>
     const roomPicker = document.getElementById("roomPicker");
     const participantList = document.getElementById('participantList');
     
@@ -160,15 +112,6 @@
       `;
     }
 
-      roomPickerDiv.appendChild(wrapper);
-
-      // Preview da imagem salva
-      if (saved && saved.photo) {
-        const preview = document.createElement("img");
-        preview.src = saved.photo;
-        preview.style.maxWidth = "80px";
-        preview.style.marginLeft = "10px";
-        wrapper.appendChild(preview);
     function adicionarComodo(type = "quarto", label = "") {
       roomPicker.insertAdjacentHTML("beforeend", getRoomTemplate(type, label));
       addDragListeners(roomPicker.lastElementChild);
@@ -190,47 +133,11 @@
       }
     }
 
-      wrapper.querySelector(".remove-room").addEventListener("click", () => wrapper.remove());
-
-      // DRAG AND DROP
-      wrapper.addEventListener("dragstart", (e) => {
-        dragSrcEl = wrapper;
-        e.dataTransfer.effectAllowed = "move";
-        wrapper.classList.add("dragging");
-      });
-
-      wrapper.addEventListener("dragend", () => {
-        wrapper.classList.remove("dragging");
-      });
-
-      wrapper.addEventListener("dragover", (e) => {
-        e.preventDefault();
-        e.dataTransfer.dropEffect = "move";
-      });
-
-      wrapper.addEventListener("dragenter", () => {
-        if (wrapper !== dragSrcEl) {
-          wrapper.style.borderTop = "2px solid dodgerblue";
-        }
-      });
-
-      wrapper.addEventListener("dragleave", () => {
-        wrapper.style.borderTop = "";
-      });
-
-      wrapper.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (wrapper !== dragSrcEl) {
-          wrapper.style.borderTop = "";
-          roomPickerDiv.insertBefore(dragSrcEl, wrapper);
-        }
-      });
     function removerParticipante(id) {
         currentParticipants = currentParticipants.filter(p => p.id !== id);
         renderParticipants();
     }
 
-    addRoomBtn.addEventListener("click", () => addRoomSelector());
     function renderParticipants() {
         participantList.innerHTML = '';
         if (currentParticipants.length === 0) {
@@ -238,17 +145,6 @@
             return;
         }
 
-    // Carregar perfil salvo
-    const perfilSalvo = JSON.parse(localStorage.getItem("perfil")) || null;
-    if (perfilSalvo) {
-      document.getElementById("userName").value = perfilSalvo.name || "";
-      if (perfilSalvo.rooms) {
-        perfilSalvo.rooms.forEach((r) => addRoomSelector(r));
-      }
-    } else {
-      ["quarto", "cozinha", "banheiro"].forEach((t, i) =>
-        addRoomSelector({ type: t, label: `${roomTypes[t]} ${i + 1}` })
-      );
         currentParticipants.forEach(p => {
             const item = document.createElement('li');
             item.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -263,13 +159,8 @@
     }
    
 
-    // Salvar perfil
-    document.getElementById("perfilForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
     document.getElementById("perfilForm").addEventListener("submit", salvarPerfil);
 
-      const name = document.getElementById("userName").value.trim();
-      if (!name) return alert("Digite seu nome!");
     async function salvarPerfil(event) {
       event.preventDefault();
       const perfilSalvo = JSON.parse(localStorage.getItem("perfil") || "{}");
@@ -286,10 +177,8 @@
         });
       }
 
-      // ----- Salvar cômodos -----
       
       const rooms = [];
-      const groups = document.querySelectorAll("#roomPicker .input-group");
       const groups = document.querySelectorAll("#roomPicker .room-item");
 
       for (let i = 0; i < groups.length; i++) {
@@ -308,7 +197,6 @@
             fr.onload = () => resolve(fr.result);
             fr.readAsDataURL(fileInput.files[0]);
           });
-        } else if (perfilSalvo?.rooms[i]?.photo) {
         } else if (perfilSalvo?.rooms && perfilSalvo.rooms[i]?.photo) {
           photo = perfilSalvo.rooms[i].photo;
         }
@@ -316,16 +204,13 @@
         rooms.push({ type, key, label, photo });
       }
 
-      localStorage.setItem("perfil", JSON.stringify({ name, photo: photoData, rooms }));
       
       const participantsToSave = currentParticipants;
 
-      alert("Perfil salvo com sucesso!");
       localStorage.setItem("perfil", JSON.stringify({ name, photo: photoData, rooms, participants: participantsToSave }));
 
       alert("Perfil e configurações salvos com sucesso!");
       window.location.href = "home.html";
-    });
     }
 
     function carregarPerfil() {
