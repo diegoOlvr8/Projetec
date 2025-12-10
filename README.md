@@ -5,17 +5,12 @@
 </h2>JavaScript </br>
 PHP </h2> 
 
-<h2>Contribuidores🧑‍🔧</h2> 
-<h3>Davi Cardoso </br> 
-Bernardo Apolônio </br> 
-Diego Oliveira </br>
-Gabriel Chaves </br>
-Yuri Alves</h3>
+# Autores
 
 
 <h2> Passo a Passo: </h2>
 
-# Autores
+
 
 
 
