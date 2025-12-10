@@ -18,3 +18,11 @@ Yuri Alves</h3>
 # Autores
 [<img loading="lazy" src="https://avatars.githubusercontent.com/u/37356058?v=4")" width=115><br><sub>Camila Fernanda Alves</sub>](https://github.com/camilafernanda)
 
+
+
+
+# 📁 Acesso ao projeto
+**Indique como é possível baixar ou acessar o código fonte do projeto, seja projeto inicial ou final**
+# 🛠️ Abrir e rodar o projeto
+**Apresente as instruções necessárias para abrir e executar o projeto**
+
