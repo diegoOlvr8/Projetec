@@ -6,7 +6,7 @@
 PHP </h2> 
 
 # Autores
-
+[<img loading="lazy" src="URL-DA-FOTO" width=115><br><sub>NOME</sub>](LINK-DO-GITHUB)
 
 <h2> Passo a Passo: </h2>
 
