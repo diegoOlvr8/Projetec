@@ -16,7 +16,7 @@ Yuri Alves</h3>
 <h2> Passo a Passo: </h2>
 
 # Autores
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/37356058?v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/diegoolvr) |  [<img loading="lazy" src="[[https://avatars.githubusercontent.com/u/30351153?v=4](https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4)](https:"//avatars.githubusercontent.com/u/191372084?s=4)" width=115><br><sub>Bernardo Apolo</sub>](https://github.com/guilhermeonrails) |  [<img loading="lazy" src="[https://avatars.githubusercontent.com/u/8989346?v=4](https://avatars.githubusercontent.com/u/196228745?s=96&v=4)" width=115><br><sub>Diego Oliveira</sub>](https://github.com/alexfelipe) 
-| :---: | :---: | :---: 
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/37356058?v=4" width=115><br><sub>Camila Fernanda Alves</sub>](https://github.com/camilafernanda) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/30351153?v=4(https://avatars.githubusercontent.com/u/191372084)" width=115><br><sub>Guilherme Lima</sub>](https://github.com/guilhermeonrails) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/8989346?v=4" width=115><br><sub>Alex Felipe</sub>](https://github.com/alexfelipe) |
+| :---: | :---: | :---: |
 
 
