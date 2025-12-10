@@ -12,8 +12,6 @@ Diego Oliveira </br>
 Gabriel Chaves </br>
 Yuri Alves</h3>
 
-http://localhost/Login.php    /
-https://diegoolvr8.github.io/Projetec/projetec/Pagina_inicial.html
 
 <h2> Passo a Passo: </h2>
 
