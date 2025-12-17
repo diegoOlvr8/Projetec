@@ -11,12 +11,12 @@ PHP </h2>
     <sub><b>Davi Cardoso</b></sub>
   </a>
 
-
+<p>
   <a href="https://github.com/bernardoapolo239">
     <img src="https://avatars.githubusercontent.com/u/165583702?v=4" width="115"><br>
     <sub><b>Bernardo Apolônio</b></sub>
   </a>
-
+</p>
 
   <a href="https://github.com/diegoOlvr8">
     <img src="https://avatars.githubusercontent.com/u/196228745?v=4" width="115"><br>
