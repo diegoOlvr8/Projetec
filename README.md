@@ -42,7 +42,7 @@ PHP </h2>
 </p>
 
 
-| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/camilafernanda) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/165583702?v=4" width=115><br><sub>Bernardo Apolônio</sub>](https://github.com/guilhermeonrails) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/196228745?v=4" width=115><br><sub>Diego Oliveira /sub>](https://github.com/alexfelipe)
+| [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/camilafernanda) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/165583702?v=4" width=115><br><sub>Bernardo Apolônio</sub>](https://github.com/guilhermeonrails) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/196228745?v=4" width=115><br><sub>Diego Oliveira ](https://github.com/alexfelipe)
 | :---: | :---: | :---: |
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372103?v=4" width=115><br><sub>Yuri Alves</sub>](https://github.com/camilafernanda) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/227624897?v=4" width=115><br><sub>Gabriel Chaves </sub>](https://github.com/guilhermeonrails) 
 
