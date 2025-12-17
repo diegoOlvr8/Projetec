@@ -7,35 +7,35 @@ PHP </h2>
 
 # Autores
 <p align="center">
-  <a href="LINK-DO-GITHUB">
+  <a href="https://github.com/davicard57">
     <img src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width="115"><br>
     <sub><b>Davi Cardoso</b></sub>
   </a>
 
   &nbsp;&nbsp;&nbsp;&nbsp;
 
-  <a href="LINK-DO-GITHUB-2">
+  <a href="https://github.com/bernardoapolo239">
     <img src="https://avatars.githubusercontent.com/u/165583702?v=4" width="115"><br>
     <sub><b>Bernardo Apolônio</b></sub>
   </a>
 
   &nbsp;&nbsp;&nbsp;&nbsp;
 
-  <a href="LINK-DO-GITHUB-2">
+  <a href="https://github.com/diegoOlvr8">
     <img src="https://avatars.githubusercontent.com/u/196228745?v=4" width="115"><br>
     <sub><b>Diego Oliveira</b></sub>
   </a>
 
    &nbsp;&nbsp;&nbsp;&nbsp;
 
-  <a href="LINK-DO-GITHUB-2">
+  <a href="https://github.com/YuriAlvesSiqueira">
     <img src="https://avatars.githubusercontent.com/u/191372103?v=4" width="115"><br>
     <sub><b>Yuri Alves</b></sub>
   </a>
 
   &nbsp;&nbsp;&nbsp;&nbsp;
 
-  <a href="LINK-DO-GITHUB-2">
+  <a href="https://github.com/Cg64738">
     <img src="https://avatars.githubusercontent.com/u/227624897?v=4" width="115"><br>
     <sub><b>Gabriel Chaves</b></sub>
   </a>
