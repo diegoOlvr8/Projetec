@@ -6,7 +6,20 @@
 PHP </h2> 
 
 # Autores
-[<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](LINK-DO-GITHUB)
+<p align="center">
+  <a href="LINK-DO-GITHUB">
+    <img src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width="115"><br>
+    <sub><b>Davi Cardoso</b></sub>
+  </a>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <a href="LINK-DO-GITHUB-2">
+    <img src="LINK-DA-IMAGEM" width="115"><br>
+    <sub><b>Outro Nome</b></sub>
+  </a>
+</p>
+
 
 
 
