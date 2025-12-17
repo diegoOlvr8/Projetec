@@ -22,29 +22,22 @@ PHP </h2>
   &nbsp;&nbsp;&nbsp;&nbsp;
 
   <a href="LINK-DO-GITHUB-2">
-    <img src="LINK-DA-IMAGEM" width="115"><br>
-    <sub><b>Outro Nome</b></sub>
+    <img src="https://avatars.githubusercontent.com/u/196228745?v=4" width="115"><br>
+    <sub><b>Diego Oliveira</b></sub>
   </a>
 
    &nbsp;&nbsp;&nbsp;&nbsp;
 
   <a href="LINK-DO-GITHUB-2">
-    <img src="LINK-DA-IMAGEM" width="115"><br>
-    <sub><b>Outro Nome</b></sub>
+    <img src="https://avatars.githubusercontent.com/u/191372103?v=4" width="115"><br>
+    <sub><b>Yuri Alves</b></sub>
   </a>
 
   &nbsp;&nbsp;&nbsp;&nbsp;
 
   <a href="LINK-DO-GITHUB-2">
-    <img src="LINK-DA-IMAGEM" width="115"><br>
-    <sub><b>Outro Nome</b></sub>
-  </a>
-
-   &nbsp;&nbsp;&nbsp;&nbsp;
-
-  <a href="LINK-DO-GITHUB-2">
-    <img src="LINK-DA-IMAGEM" width="115"><br>
-    <sub><b>Outro Nome</b></sub>
+    <img src="https://avatars.githubusercontent.com/u/227624897?v=4" width="115"><br>
+    <sub><b>Gabriel Chaves</b></sub>
   </a>
 </p>
 
