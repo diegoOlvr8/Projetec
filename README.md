@@ -11,15 +11,16 @@ PHP </h2>
     <img src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width="115"><br>
     <sub><b>Davi Cardoso</b></sub>
   </a>
-
   &nbsp;&nbsp;&nbsp;&nbsp;
+</p>
 
+<p align="center">
   <a href="https://github.com/bernardoapolo239">
     <img src="https://avatars.githubusercontent.com/u/165583702?v=4" width="115"><br>
     <sub><b>Bernardo Apolônio</b></sub>
   </a>
-
   &nbsp;&nbsp;&nbsp;&nbsp;
+</p>
 
   <a href="https://github.com/diegoOlvr8">
     <img src="https://avatars.githubusercontent.com/u/196228745?v=4" width="115"><br>
