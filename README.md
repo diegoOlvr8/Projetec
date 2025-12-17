@@ -15,6 +15,34 @@ PHP </h2>
   &nbsp;&nbsp;&nbsp;&nbsp;
 
   <a href="LINK-DO-GITHUB-2">
+    <img src="https://avatars.githubusercontent.com/u/165583702?v=4" width="115"><br>
+    <sub><b>Bernardo Apolônio</b></sub>
+  </a>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <a href="LINK-DO-GITHUB-2">
+    <img src="LINK-DA-IMAGEM" width="115"><br>
+    <sub><b>Outro Nome</b></sub>
+  </a>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <a href="LINK-DO-GITHUB-2">
+    <img src="LINK-DA-IMAGEM" width="115"><br>
+    <sub><b>Outro Nome</b></sub>
+  </a>
+
+  &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <a href="LINK-DO-GITHUB-2">
+    <img src="LINK-DA-IMAGEM" width="115"><br>
+    <sub><b>Outro Nome</b></sub>
+  </a>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <a href="LINK-DO-GITHUB-2">
     <img src="LINK-DA-IMAGEM" width="115"><br>
     <sub><b>Outro Nome</b></sub>
   </a>
