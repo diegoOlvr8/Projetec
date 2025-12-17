@@ -1,5 +1,4 @@
-<p align="center">  ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
-<img width="307" height="239" alt="logo" src="https://github.com/user-attachments/assets/d4ce009d-fd27-40ce-accd-35943cb0ca4d" /> </p> 
+<p align="center">  <img width="307" height="239" alt="logo" src="https://github.com/user-attachments/assets/d4ce009d-fd27-40ce-accd-35943cb0ca4d" /> </p> 
 
 <h3>Linguagens:</h3>
 </h2>JavaScript </br>
