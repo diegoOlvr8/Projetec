@@ -6,6 +6,8 @@
 JavaScript  ✔ </br>
 PHP  ✔
 
+<p>Este site ofereçe gerenciamento de organização ao seu lar usenos a vontade 😩 </p>
+
 <h3>👨‍🔧 Autores</h3>
 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/davicard57) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/165583702?v=4" width=115><br><sub>Bernardo Apolônio</sub>](https://github.com/bernardoapolo239) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/196228745?v=4" width=115><br><sub>Diego Oliveira ](https://github.com/diegoOlvr8)
