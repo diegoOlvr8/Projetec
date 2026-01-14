@@ -10,15 +10,15 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 JavaScript  ✔ </br>
 PHP  ✔ 
 
-<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a>
+<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a></br>
 
 
 
-<h3>🏠 Home do site</h3>
+<h3>🏠 Home do site</h3></br>
 <p align="center">  <img width="1920" height="952" alt="home" src="https://github.com/user-attachments/assets/68a6cf94-e4c5-495f-a9a5-2f137f1a2988" /> </p> 
 
 
-
+</br>
 <h3>👨‍🔧 Autores</h3>
 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/davicard57) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/165583702?v=4" width=115><br><sub>Bernardo Apolônio</sub>](https://github.com/bernardoapolo239) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/196228745?v=4" width=115><br><sub>Diego Oliveira ](https://github.com/diegoOlvr8)
