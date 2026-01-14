@@ -13,7 +13,7 @@ PHP  ✔
 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a>
 
 <h3>👨‍🔧 Autores</h3>
-<h3>exemplo</h3>
+<h3>🏠 Home do site</h3>
 <p align="center">  <img width="1920" height="952" alt="home" src="https://github.com/user-attachments/assets/68a6cf94-e4c5-495f-a9a5-2f137f1a2988" /> </p> 
 
 
