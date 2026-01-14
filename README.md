@@ -8,7 +8,7 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 
 <h3>⚙️ Linguagens Utilizadas</h3>
 JavaScript  ✔ </br>
-PHP  ✔
+PHP  ✔</br>
 
 <p>Este site ofereçe gerenciamento de organização ao seu lar usenos a vontade 😩 </p>
 
