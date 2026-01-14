@@ -5,7 +5,8 @@
 </br>
 
 <h3>📰 Descrição</h3>
-Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa.
+Olá pessoal👋,
+Somos um grupo de estudantes do IFMG que após sermos inspirados pelo então último tema do ENEM - "Desafios para o enfrentamento da invisibilidade do trabalho de cuidado realizado pela mulher no Brasil" - decidimos propor uma solução relacionada a tecnologia da informação para a problemática em nosso projeto. O Casa Limpa é uma plataforma online voltada para o gerenciamento e engajamento familiar das tarefas domesticas. Buscamos auxiliar na criação de um ambiente familiar responsável, unido e engajado por meio da distruibuição e gamificação das tarefas de casa.
 
 </br>
 
@@ -20,7 +21,7 @@ PHP  ✔
 
 </br>
 
-<h3>🏠 Home do site</h3>
+<h3>🏠 Página inicial do site</h3>
 <p align="center">  <img width="1920" height="952" alt="home" src="https://github.com/user-attachments/assets/68a6cf94-e4c5-495f-a9a5-2f137f1a2988" /> </p> 
 
 </br>
