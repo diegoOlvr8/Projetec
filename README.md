@@ -13,7 +13,7 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 JavaScript  ✔ </br>
 PHP  ✔ 
 
-</br>
+
 
 <p>clique aqui para executar o site 👉</p>
 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a>
