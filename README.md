@@ -1,6 +1,6 @@
 <p align="center">  <img width="307" height="239" alt="logo" src="https://github.com/user-attachments/assets/d4ce009d-fd27-40ce-accd-35943cb0ca4d" /> </p> 
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge) </br>
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=🚧EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge) </br>
 
 <h3>⚙️ Linguagens Utilizadas</h3>
 JavaScript  ✔ </br>
