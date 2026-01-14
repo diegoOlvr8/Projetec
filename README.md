@@ -10,7 +10,7 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 JavaScript  ✔ </br>
 PHP  ✔ 
 
-<p></br>Este site ofereçe gerenciamento de organização ao seu lar usenos a vontade 😩 </p>
+<p></br>Este site ofereçe gerenciamento de organização ao seu lar nos use a vontade 😩 </p>
 
 <h3>👨‍🔧 Autores</h3>
 
