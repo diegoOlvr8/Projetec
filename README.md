@@ -2,6 +2,10 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=🚧EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge) </br>
 
+
+<h3>📰 Descrição</h3>
+Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa.
+
 <h3>⚙️ Linguagens Utilizadas</h3>
 JavaScript  ✔ </br>
 PHP  ✔
@@ -10,9 +14,6 @@ PHP  ✔
 
 <h3>👨‍🔧 Autores</h3>
 
-
-<h3>📰 Descrição</h3>
-Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa.
 
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372084?s=400&u=1facef380bcc6fa4c001be560b68b44fbd4581c5&v=4" width=115><br><sub>Davi Cardoso</sub>](https://github.com/davicard57) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/165583702?v=4" width=115><br><sub>Bernardo Apolônio</sub>](https://github.com/bernardoapolo239) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/196228745?v=4" width=115><br><sub>Diego Oliveira ](https://github.com/diegoOlvr8)
 | :---: | :---: | :---: |
