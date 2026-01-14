@@ -5,7 +5,7 @@
 </br>
 
 <h3>📰 Descrição</h3>
-Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa nos use a vontade 😩.
+Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa.
 
 </br>
 
@@ -15,7 +15,7 @@ PHP  ✔
 
 
 
-<p></br>clique aqui para executar o site 👉 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a></p>
+<p></br>clique aqui para executar o site 👉 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html"></a></p>
 
 
 </br>
