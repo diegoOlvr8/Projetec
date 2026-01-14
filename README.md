@@ -10,7 +10,7 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 JavaScript  ✔ </br>
 PHP  ✔ 
 
-<a href="diegoolvr8.github.io/Projetec/projetec/home.html">Sobre Nós</a>
+<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Sobre Nós</a>
 
 <h3>👨‍🔧 Autores</h3>
 
