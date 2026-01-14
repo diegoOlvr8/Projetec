@@ -12,7 +12,7 @@ PHP  ✔
 | :---: | :---: | :---: |
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/191372103?v=4" width=115><br><sub>Yuri Alves</sub>](https://github.com/YuriAlvesSiqueira) |  [<img loading="lazy" src="https://avatars.githubusercontent.com/u/227624897?v=4" width=115><br><sub>Gabriel Chaves </sub>](https://github.com/Cg64738) 
 
-<h3> Descrição</h3>
+<h3>📰 Descrição</h3>
 Um site de organização domestica criado para auxiliar as familias a gerar entreterimento durante a limpeza 
 
 
