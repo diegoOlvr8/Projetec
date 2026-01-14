@@ -1,6 +1,6 @@
 <p align="center">  <img width="307" height="239" alt="logo" src="https://github.com/user-attachments/assets/d4ce009d-fd27-40ce-accd-35943cb0ca4d" /> </p> 
 
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=🚧EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge) </br>
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=🚧EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge) 
 
 </br>
 
@@ -12,12 +12,15 @@ Um site de organização domestica criado para auxiliar as familias a gerar entr
 <h3>⚙️ Linguagens Utilizadas</h3>
 JavaScript  ✔ </br>
 PHP  ✔ 
-</br>clique aqui para executar o site 👉
-<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a></br>
 
+</br>
 
+clique aqui para executar o site 👉
+<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a>
 
-<h3>🏠 Home do site</h3></br>
+</br>
+
+<h3>🏠 Home do site</h3>
 <p align="center">  <img width="1920" height="952" alt="home" src="https://github.com/user-attachments/assets/68a6cf94-e4c5-495f-a9a5-2f137f1a2988" /> </p> 
 
 </br>
