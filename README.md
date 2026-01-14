@@ -15,8 +15,8 @@ PHP  ✔
 
 
 
-<p></br>clique aqui para executar o site 👉</p>
-<a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a>
+<p></br>clique aqui para executar o site 👉 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html">Pega e balança 😈</a></p>
+
 
 </br>
 
