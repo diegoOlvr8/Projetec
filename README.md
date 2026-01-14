@@ -11,8 +11,8 @@ Somos um grupo de estudantes do IFMG que após sermos inspirados pelo então úl
 </br>
 
 <h3>⚙️ Linguagens Utilizadas</h3>
-JavaScript  ✔ </br>
-PHP  ✔ 
+JavaScript  🟨⚛️ </br>
+PHP  🐘
 
 
 
