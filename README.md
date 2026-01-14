@@ -4,13 +4,12 @@
 
 
 <h3>📰 Descrição</h3>
-Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa.
+Um site de organização domestica criado para auxiliar as familias a gerar entreterimento e diversão para a familia durante a limpeza de casa nos use a vontade 😩.
 
 <h3>⚙️ Linguagens Utilizadas</h3>
 JavaScript  ✔ </br>
 PHP  ✔ 
 
-<p></br>Este site ofereçe gerenciamento de organização ao seu lar nos use a vontade 😩 </p>
 
 <h3>👨‍🔧 Autores</h3>
 
