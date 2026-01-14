@@ -15,7 +15,7 @@ PHP  ✔
 
 
 
-<p></br>clique aqui para executar o site 👉 <a href="https://diegoolvr8.github.io/Projetec/projetec/home.html"></a></p>
+<p></br>clique aqui para executar o site 👉 href="https://diegoolvr8.github.io/Projetec/projetec/home.html"></p>
 
 
 </br>
